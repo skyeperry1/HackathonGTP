@@ -147,30 +147,33 @@ function getRandomInt(min, max) {
 }
 
 function reset_customer(id) {
-    customers[id] = {
-        "id": id,
-        "state": "idle",
-        "name": "Sarah Connor",
-        "last_msg_id": 1,
-        "conv_transcript": ""
-    };
+    DMS.sendMessage({ "type": "customer_end_session", "customer_id": id }, function (response) {
+        customers[id] = {
+            "id": id,
+            "state": "idle",
+            "name": "Sarah Connor",
+            "last_msg_id": 1,
+            "conv_transcript": ""
+        };
 
-    DMS.sendTextMessage(
-        customers[id].id, //
-        customers[id].last_msg_id, //Unique id of the message
-        "escalate",
-        customers[id].name,
-        function (response) {
-            customers[id].state = "queue_select";
-            customers[id].last_msg_id++;
-        }
-    );
+        DMS.sendTextMessage(
+            customers[id].id, //
+            customers[id].last_msg_id, //Unique id of the message
+            "escalate",
+            customers[id].name,
+            function (response) {
+                customers[id].state = "queue_select";
+                customers[id].last_msg_id++;
+            }
+        );
+    });
+
 }
 
 
 app.get('/reset', (req, res) => {
     for (let i = 0; i < 501; i++) {
-        DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
+
     }
     reset_customer(getRandomInt(0, 500));
     reset_customer(getRandomInt(0, 500));
@@ -230,7 +233,7 @@ function handle_customer(message) {
                     customers[message.customer_id].last_msg_id++;
                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
                     if (endchat) {
-                        DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, });
+                        //DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, });
                         reset_customer(message.customer_id);
                     }
                 }
