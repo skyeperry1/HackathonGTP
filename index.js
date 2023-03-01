@@ -137,7 +137,7 @@ let customer2 = {
 //     }
 // );
 for (var i = 0; i < 5; i++) {
-    reset_customer(getRandomInt(0, 500));
+    reset_customer(i);
 }
 
 function getRandomInt(min, max) {
@@ -147,26 +147,26 @@ function getRandomInt(min, max) {
 }
 
 function reset_customer(id) {
-    DMS.sendMessage({ "type": "customer_end_session", "customer_id": id }, function (response) {
-        customers[id] = {
-            "id": id,
-            "state": "idle",
-            "name": "Sarah Connor",
-            "last_msg_id": 1,
-            "conv_transcript": ""
-        };
+    //DMS.sendMessage({ "type": "customer_end_session", "customer_id": id }, function (response) {
+    customers[id] = {
+        "id": id,
+        "state": "idle",
+        "name": "Sarah Connor",
+        "last_msg_id": 1,
+        "conv_transcript": ""
+    };
 
-        DMS.sendTextMessage(
-            customers[id].id, //
-            customers[id].last_msg_id, //Unique id of the message
-            "escalate",
-            customers[id].name,
-            function (response) {
-                customers[id].state = "queue_select";
-                customers[id].last_msg_id++;
-            }
-        );
-    });
+    DMS.sendTextMessage(
+        customers[id].id, //
+        customers[id].last_msg_id, //Unique id of the message
+        "escalate",
+        customers[id].name,
+        function (response) {
+            customers[id].state = "queue_select";
+            customers[id].last_msg_id++;
+        }
+    );
+});
 
 }
 
