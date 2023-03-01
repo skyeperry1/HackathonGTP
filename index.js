@@ -33,7 +33,7 @@ async function callOpenAI(customer) {
         const gptResponse = await openai.complete({
             engine: "text-davinci-003",
             prompt: new_prompt,
-            temperature: 0.8,
+            temperature: 0.9,
             maxTokens: 500,
             topP: 1,
             presencePenalty: 0.3,
@@ -50,6 +50,9 @@ async function callOpenAI(customer) {
     }
 }
 
+for (let i = 0; i < 501; i++) {
+    DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
+}
 // "Hi there, I had a Billing"
 // CSR:
 
