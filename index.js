@@ -136,11 +136,9 @@ let customer2 = {
 //         customers["2"].last_msg_id++;
 //     }
 // );
-
-reset_customer(getRandomInt(0, 500));
-reset_customer(getRandomInt(0, 500));
-// reset_customer("3");
-// reset_customer("4");
+for (var i = 0; i < 5; i++) {
+    reset_customer(getRandomInt(0, 500));
+}
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -171,6 +169,9 @@ function reset_customer(id) {
 
 
 app.get('/reset', (req, res) => {
+    for (let i = 0; i < 501; i++) {
+        DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
+    }
     reset_customer(getRandomInt(0, 500));
     reset_customer(getRandomInt(0, 500));
     reset_customer(getRandomInt(0, 500));
