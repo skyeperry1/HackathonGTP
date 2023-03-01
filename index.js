@@ -280,6 +280,16 @@ DMS.onMenuMessage = async (message) => {
     }
 };
 
+
+DMS.onCsrEndSession = async (customer_id) => {
+    try {
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        reset_customer(customer_id);
+    }
+    catch (err) {
+        //handle error
+    }
+};
 /***************************************************************************
  * Handle Signal interuption gracefully
  * This terminates the process on Ctrl + C input when running the application locally through terminal
