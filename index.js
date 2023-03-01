@@ -33,11 +33,12 @@ async function callOpenAI(customer) {
         const gptResponse = await openai.complete({
             engine: "text-davinci-003",
             prompt: new_prompt,
-            temperature: 0.9,
+            temperature: 0.8,
             maxTokens: 500,
             topP: 1,
-            presencePenalty: 0.5,
-            frequencyPenalty: 0.49
+            presencePenalty: 0.3,
+            frequencyPenalty: 0.2,
+            stop: ["CSR:"]
         });
         let open_ai_response = gptResponse.data.choices[0].text;
         console.log("open_ai_response", open_ai_response);
