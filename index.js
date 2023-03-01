@@ -65,7 +65,7 @@ const initiate_escalation_msgs = {
 }
 
 
-dms.sendTextMessage(
+DMS.sendTextMessage(
     "123", //
     "123", //Unique id of the message
     "Billing",
@@ -77,7 +77,7 @@ dms.sendTextMessage(
 );
 
 setTimeout(() => {
-    dms.sendTextMessage(
+    DMS.sendTextMessage(
         "123", //
         "1234", //Unique id of the message
         "Billing",
@@ -90,7 +90,7 @@ setTimeout(() => {
 }, "5000")
 
 setTimeout(() => {
-    dms.sendTextMessage(
+    DMS.sendTextMessage(
         "123", //
         "1234", //Unique id of the message
         "a question about billing",
