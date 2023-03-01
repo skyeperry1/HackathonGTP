@@ -135,10 +135,10 @@ let customer2 = {
 //         customers["2"].last_msg_id++;
 //     }
 // );
-reset_customer("1");
-reset_customer("2");
-reset_customer("3");
-reset_customer("4");
+// reset_customer("1");
+// reset_customer("2");
+// reset_customer("3");
+// reset_customer("4");
 
 function reset_customer(id) {
     customers[id] = customer1;
