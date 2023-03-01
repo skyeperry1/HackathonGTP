@@ -166,7 +166,7 @@ function reset_customer(id) {
             customers[id].last_msg_id++;
         }
     );
-});
+    //});
 
 }
 
