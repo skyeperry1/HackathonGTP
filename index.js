@@ -49,7 +49,6 @@ async function callOpenAI(prompt, customer_id) {
  * DIGITAL MESSAGING ENDPOINT
  **************************************************************************/
 app.post('/dms', async (req, res) => {
-    console.log("/dms*************");
     try {
         //call the DMS on request method everytime a request is recieved and pass in the request 
         DMS.onRequest(req, async (status, message) => {
@@ -84,13 +83,11 @@ customers[customer1.id] = customer1;
 DMS.sendTextMessage(
     customers["1"].id, //
     customers["1"].last_msg_id, //Unique id of the message
-    "initialize",
+    "escalate",
     customers["1"].name,
     function (response) {
-        console.log("response");
         customers["1"].state = "queue_select";
         customers["1"].last_msg_id++;
-        console.log("response_end");
     }
 );
 
@@ -148,13 +145,13 @@ function handle_customer(message) {
 // }
 DMS.onTextMessage = async (message) => {
 
-    // try {
-    //     //let customer_id = message.customer_id; //Get the customer_id from the message received
-    //     handle_customer(message);
-    // }
-    // catch (err) {
-    //     //handle error
-    // }
+    try {
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        handle_customer(message);
+    }
+    catch (err) {
+        //handle error
+    }
 }
 
 
@@ -174,13 +171,13 @@ DMS.onTextMessage = async (message) => {
 //     ]
 //   }
 DMS.onMenuMessage = async (message) => {
-    // try {
-    //     //let customer_id = message.customer_id; //Get the customer_id from the message received
-    //     handle_customer(message);
-    // }
-    // catch (err) {
-    //     //handle error
-    // }
+    try {
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        handle_customer(message);
+    }
+    catch (err) {
+        //handle error
+    }
 };
 
 /***************************************************************************
