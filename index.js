@@ -48,6 +48,7 @@ async function callOpenAI(prompt, customer_id) {
  * DIGITAL MESSAGING ENDPOINT
  **************************************************************************/
 app.post('/dms', async (req, res) => {
+    console.log("req", req);
     try {
         //call the DMS on request method everytime a request is recieved and pass in the request 
         DMS.onRequest(req, async (status, message) => {
@@ -90,9 +91,10 @@ DMS.sendTextMessage(
 );
 
 customers["1"].state = "queue_select";
-customers["1"].last_msg_id += 1;
+customers["1"].last_msg_id++;
 
 function handle_customer(message) {
+    console.log("handle customer");
     let customer = customers[message.customer_id]; //Get the customer_id from the message received
     if (customer.state == "queue_select") {
         DMS.sendTextMessage(
@@ -103,7 +105,7 @@ function handle_customer(message) {
             function (response) {
                 //Return status from DMS
                 //return res.status(response.status).send(response.statusText);
-                customers[message.customer_id].last_msg_id += 1;
+                customers[message.customer_id].last_msg_id++;
                 customers[message.customer_id].state = "pre_chat_q";
             }
         );
@@ -116,7 +118,7 @@ function handle_customer(message) {
             function (response) {
                 //Return status from DMS
                 //return res.status(response.status).send(response.statusText);
-                customers[message.customer_id].last_msg_id += 1;
+                customers[message.customer_id].last_msg_id++;
                 customers[message.customer_id].state = "in_queue";
             }
         );
