@@ -61,9 +61,9 @@ app.post('/dms', async (req, res) => {
 });
 
 
-const initiate_escalation_msgs = {
-    "queues": ["Billing"]
-}
+// const initiate_escalation_msgs = {
+//     "queues": ["Billing"]
+// }
 
 
 const customers = {}
@@ -85,13 +85,13 @@ DMS.sendTextMessage(
     "initialize",
     customers["1"].name,
     function (response) {
-        //Return status from DMS
-        //return res.status(response.status).send(response.statusText);
+        console.log("response")
+        customers["1"].state = "queue_select";
+        customers["1"].last_msg_id++;
     }
 );
 
-customers["1"].state = "queue_select";
-customers["1"].last_msg_id++;
+
 
 function handle_customer(message) {
     console.log("handle customer");
