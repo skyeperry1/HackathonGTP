@@ -83,9 +83,6 @@ app.post('/dms', async (req, res) => {
 });
 
 
-
-
-
 // const initiate_escalation_msgs = {
 //     "queues": ["Billing"]
 // }
@@ -135,6 +132,7 @@ let customer2 = {
 //         customers["2"].last_msg_id++;
 //     }
 // );
+
 // reset_customer("1");
 // reset_customer("2");
 // reset_customer("3");
@@ -196,7 +194,7 @@ function handle_customer(message) {
                 customers[message.customer_id].transcript += generateTranscriptEntry("I need to change my address");
             }
         );
-    } else if (customer.state == "in_queue" & message.text.includes("You have been connected")) {
+    } else if (customer.state != "connected" & message.text.includes("You have been connected")) {
 
         customers[message.customer_id].last_msg_id++;
         customers[message.customer_id].state = "connected";
