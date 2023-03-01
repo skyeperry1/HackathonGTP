@@ -132,7 +132,17 @@ function handle_customer(message) {
                 //Return status from DMS
                 //return res.status(response.status).send(response.statusText);
                 customers[message.customer_id].last_msg_id++;
-                customers[message.customer_id].state = "in_queue";
+                customers[message.customer_id].state = "connected";
+            }
+        );
+    } else if (customer.state == "connected") {
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id + 1, //Unique id of the message
+            "I had a question about my account",
+            customer.name,
+            function (response) {
+                customers[message.customer_id].last_msg_id++;
             }
         );
     }
