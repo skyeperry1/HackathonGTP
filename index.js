@@ -128,7 +128,9 @@ let customer2 = {
 
 
 for (var i = 1; i < 100; i++) {
-    reset_customer(i);
+    DMS.sendMessage({ "type": "customer_end_session", "customer_id": i, }, function () {
+
+    });
 }
 
 reset_customer(1);
