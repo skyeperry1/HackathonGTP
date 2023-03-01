@@ -123,7 +123,7 @@ DMS.sendTextMessage(
 );
 
 DMS.sendTextMessage(
-    customers["12"].id, //
+    customers["2"].id, //
     customers["2"].last_msg_id, //Unique id of the message
     "escalate",
     customers["2"].name,
