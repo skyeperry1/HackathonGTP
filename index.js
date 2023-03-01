@@ -141,7 +141,7 @@ function handle_customer(message) {
                 //return res.status(response.status).send(response.statusText);
                 customers[message.customer_id].last_msg_id++;
                 customers[message.customer_id].state = "in_queue";
-                customers[message.customer_id].transcript += generateTranscriptEntry("I had a question about my recent bill");
+                customers[message.customer_id].transcript += generateTranscriptEntry("I need to change my address");
             }
         );
     } else if (customer.state == "in_queue" & message.text.includes("You have been connected")) {
