@@ -26,15 +26,18 @@ const openai = new OpenAI(OPENAI_API_KEY);
 
 
 async function callOpenAI(customer) {
+    console.log("callOpenAI");
+    let new_prompt = generatePromptText(customer);
+    console.log("prompt", new_prompt);
     try {
         const gptResponse = await openai.complete({
             engine: "text-davinci-003",
-            prompt: generatePromptText(customer),
-            temperature: 0,
+            prompt: new_prompt,
+            temperature: 0.7,
             maxTokens: 2000,
             topP: 1,
-            presencePenalty: 0,
-            frequencyPenalty: 0
+            presencePenalty: 0.23,
+            frequencyPenalty: 0.49
         });
         let open_ai_response = gptResponse.data.choices[0].text;
         console.log("open_ai_response", open_ai_response);
@@ -157,9 +160,7 @@ function handle_customer(message) {
         customers[message.customer_id].last_msg_id++;
         customers[message.customer_id].state = "connected";
     } else if (customer.state == "connected") {
-
         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
-
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
             DMS.sendTextMessage(
