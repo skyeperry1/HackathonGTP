@@ -127,11 +127,11 @@ let customer2 = {
 // );
 
 
-for (var i = 1; i < 100; i++) {
-    DMS.sendMessage({ "type": "customer_end_session", "customer_id": i, }, function () {
+// for (var i = 1; i < 100; i++) {
+//     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i, }, function () {
 
-    });
-}
+//     });
+// }
 
 reset_customer(1);
 reset_customer(2);
