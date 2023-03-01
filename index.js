@@ -3,6 +3,7 @@
  ****************************/
 const express = require("express");
 const app = express();
+const PORT = process.env.PORT || 3000;
 //to force JSON parser middleware
 app.use(express.json());
 
@@ -48,7 +49,7 @@ async function callOpenAI(prompt, customer_id) {
  * DIGITAL MESSAGING ENDPOINT
  **************************************************************************/
 app.post('/dms', async (req, res) => {
-    console.log("req", req);
+    console.log("/dms*************");
     try {
         //call the DMS on request method everytime a request is recieved and pass in the request 
         DMS.onRequest(req, async (status, message) => {
@@ -57,7 +58,7 @@ app.post('/dms', async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        //return res.status(401).send(err);
+        return res.status(401).send(err);
     }
 });
 
@@ -190,4 +191,8 @@ process.on("SIGINT", function () {
     process.exit();
 });
 
-module.exports = app;
+
+app.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`);
+});
+// module.exports = app;
