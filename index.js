@@ -65,8 +65,6 @@ const initiate_escalation_msgs = {
 }
 
 
-
-
 const customers = {}
 
 let customer1 = {
@@ -144,6 +142,7 @@ function handle_customer(message) {
 // 	}]
 // }
 DMS.onTextMessage = async (message) => {
+
     try {
         //let customer_id = message.customer_id; //Get the customer_id from the message received
         handle_customer(message);
