@@ -148,6 +148,7 @@ function handle_customer(message) {
 
         customers[message.customer_id].last_msg_id++;
         customers[message.customer_id].state = "connected";
+
     } else if (customer.state == "connected") {
         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
