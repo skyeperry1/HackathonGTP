@@ -136,6 +136,22 @@ DMS.sendTextMessage(
     }
 );
 
+function reset_customer(id) {
+    customers[id] = customer1;
+    customers[id].id = id;
+
+    DMS.sendTextMessage(
+        customers[id].id, //
+        customers[id].last_msg_id, //Unique id of the message
+        "escalate",
+        customers[id].name,
+        function (response) {
+            customers[id].state = "queue_select";
+            customers[id].last_msg_id++;
+        }
+    );
+}
+
 
 app.get('/reset', (req, res) => {
     customers[customer1.id] = customer1;
@@ -205,6 +221,8 @@ function handle_customer(message) {
         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
+            const endchat = response.contains("ENDCHAT");
+            response.replace("ENDCHAT", "");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
@@ -213,6 +231,10 @@ function handle_customer(message) {
                 function (res) {
                     customers[message.customer_id].last_msg_id++;
                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
+                    if (endchat) {
+                        DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, });
+                        reset_customer(message.customer_id);
+                    }
                 }
             );
         });
