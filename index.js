@@ -186,7 +186,7 @@ function handle_customer(message) {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id + 1, //Unique id of the message
-            "I had a question about my recent bill",
+            "I need to change my address",
             customer.name,
             function (response) {
                 //Return status from DMS
