@@ -134,7 +134,7 @@ let customer2 = {
 // );
 
 reset_customer("1");
-// reset_customer("2");
+reset_customer("2");
 // reset_customer("3");
 // reset_customer("4");
 
@@ -157,7 +157,7 @@ function reset_customer(id) {
 
 app.get('/reset', (req, res) => {
     reset_customer("1");
-    // reset_customer("2");
+    reset_customer("2");
     // reset_customer("3");
     // reset_customer("4");
     res.status(200).send("success!");
