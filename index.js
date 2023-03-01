@@ -63,7 +63,7 @@ function generateTranscriptEntry(text, participant = "customer") {
     if (participant == "agent") {
         return "CSR:" + text + "\n";
     } else {
-        return "Customer:" + text + "\n";
+        return text + "\n";
     }
 }
 /***************************************************************************
@@ -145,18 +145,7 @@ function handle_customer(message) {
             }
         );
     } else if (customer.state == "in_queue" & message.text.includes("You have been connected")) {
-        // DMS.sendTextMessage(
-        //     customer.id, //
-        //     customer.last_msg_id + 1, //Unique id of the message
-        //     "I had a question about my account",
-        //     customer.name,
-        //     function (response) {
-        //         //Return status from DMS
-        //         //return res.status(response.status).send(response.statusText);
-        //         customers[message.customer_id].last_msg_id++;
-        //         customers[message.customer_id].state = "connected";
-        //     }
-        // );
+
         customers[message.customer_id].last_msg_id++;
         customers[message.customer_id].state = "connected";
     } else if (customer.state == "connected") {
@@ -166,7 +155,7 @@ function handle_customer(message) {
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
-                response,
+                response.replace("Customer:", ""),
                 customer.name,
                 function (res) {
                     customers[message.customer_id].last_msg_id++;
