@@ -56,6 +56,7 @@ app.post('/dms', async (req, res) => {
         });
 
     } catch (err) {
+        console.log(err);
         //return res.status(401).send(err);
     }
 });
