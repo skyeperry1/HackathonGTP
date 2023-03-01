@@ -134,10 +134,16 @@ let customer2 = {
 //     }
 // );
 
-reset_customer("1");
-reset_customer("2");
+reset_customer(getRandomInt(0, 500));
+reset_customer(getRandomInt(0, 500));
 // reset_customer("3");
 // reset_customer("4");
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
 
 function reset_customer(id) {
     customers[id] = {
@@ -162,10 +168,10 @@ function reset_customer(id) {
 
 
 app.get('/reset', (req, res) => {
-    reset_customer("1");
-    reset_customer("2");
-    reset_customer("3");
-    reset_customer("4");
+    reset_customer(getRandomInt(0, 500));
+    reset_customer(getRandomInt(0, 500));
+    reset_customer(getRandomInt(0, 500));
+    reset_customer(getRandomInt(0, 500));
     res.status(200).send("success!");
 });
 
