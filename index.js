@@ -113,7 +113,7 @@ let customer2 = {
 }
 
 // customers[customer1.id] = customer1;
-// customers[customer2.id] = customer2;
+
 
 // DMS.sendTextMessage(
 //     customers["1"].id, //
@@ -126,17 +126,8 @@ let customer2 = {
 //     }
 // );
 
-// DMS.sendTextMessage(
-//     customers["2"].id, //
-//     customers["2"].last_msg_id, //Unique id of the message
-//     "escalate",
-//     customers["2"].name,
-//     function (response) {
-//         customers["2"].state = "queue_select";
-//         customers["2"].last_msg_id++;
-//     }
-// );
-for (var i = 0; i < 5; i++) {
+
+for (var i = 1; i < 11; i++) {
     reset_customer(i);
 }
 
@@ -167,18 +158,13 @@ function reset_customer(id) {
         }
     );
     //});
-
 }
 
 
 app.get('/reset', (req, res) => {
-    for (let i = 0; i < 501; i++) {
-
+    for (var i = 1; i < 11; i++) {
+        reset_customer(i);
     }
-    reset_customer(getRandomInt(0, 500));
-    reset_customer(getRandomInt(0, 500));
-    reset_customer(getRandomInt(0, 500));
-    reset_customer(getRandomInt(0, 500));
     res.status(200).send("success!");
 });
 
@@ -233,8 +219,10 @@ function handle_customer(message) {
                     customers[message.customer_id].last_msg_id++;
                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
                     if (endchat) {
-                        //DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, });
-                        reset_customer(message.customer_id);
+                        DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
+                            reset_customer(message.customer_id);
+                        });
+
                     }
                 }
             );
