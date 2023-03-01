@@ -83,6 +83,9 @@ app.post('/dms', async (req, res) => {
 });
 
 
+
+
+
 // const initiate_escalation_msgs = {
 //     "queues": ["Billing"]
 // }
@@ -132,6 +135,35 @@ DMS.sendTextMessage(
         customers["2"].last_msg_id++;
     }
 );
+
+
+app.get('/reset', (req, res) => {
+    customers[customer1.id] = customer1;
+    customers[customer2.id] = customer2;
+
+    DMS.sendTextMessage(
+        customers["1"].id, //
+        customers["1"].last_msg_id, //Unique id of the message
+        "escalate",
+        customers["1"].name,
+        function (response) {
+            customers["1"].state = "queue_select";
+            customers["1"].last_msg_id++;
+        }
+    );
+
+    DMS.sendTextMessage(
+        customers["2"].id, //
+        customers["2"].last_msg_id, //Unique id of the message
+        "escalate",
+        customers["2"].name,
+        function (response) {
+            customers["2"].state = "queue_select";
+            customers["2"].last_msg_id++;
+        }
+    );
+    res.status(200).send("success!");
+});
 
 
 function handle_customer(message) {
