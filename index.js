@@ -203,7 +203,7 @@ function handle_customer(message) {
         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
-            const endchat = response.contains("ENDCHAT");
+            const endchat = response.includes("ENDCHAT");
             response.replace("ENDCHAT", "");
             DMS.sendTextMessage(
                 customer.id, //
