@@ -72,7 +72,7 @@ DMS.sendTextMessage(
     "Skye Perry",
     function (response) {
         //Return status from DMS
-        return res.status(response.status).send(response.statusText);
+        //return res.status(response.status).send(response.statusText);
     }
 );
 
@@ -84,7 +84,7 @@ setTimeout(() => {
         "Skye Perry",
         function (response) {
             //Return status from DMS
-            return res.status(response.status).send(response.statusText);
+            //return res.status(response.status).send(response.statusText);
         }
     );
 }, "5000")
@@ -97,7 +97,7 @@ setTimeout(() => {
         "Skye Perry",
         function (response) {
             //Return status from DMS
-            return res.status(response.status).send(response.statusText);
+            //return res.status(response.status).send(response.statusText);
         }
     );
 }, "10000")
