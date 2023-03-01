@@ -220,7 +220,7 @@ function handle_customer(message) {
                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
                     if (endchat) {
                         DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
-                            reset_customer(message.customer_id);
+                            reset_customer(getRandomInt(11, 100));
                         });
 
                     }
