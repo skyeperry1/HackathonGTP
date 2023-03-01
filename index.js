@@ -61,7 +61,7 @@ function generatePromptText(customer) {
 
 function generateTranscriptEntry(text, participant = "customer") {
     if (participant == "agent") {
-        return "CSR:" + text + "\n";
+        return "CSR:" + text + "\nCustomer:";
     } else {
         return text + "\n";
     }
@@ -156,7 +156,7 @@ function handle_customer(message) {
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
-                response.replace("Customer:", ""),
+                response,
                 customer.name,
                 function (res) {
                     customers[message.customer_id].last_msg_id++;
