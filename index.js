@@ -50,7 +50,7 @@ async function callOpenAI(customer) {
     }
 }
 
-for (let i = 1; i < 11; i++) {
+for (let i = 1; i < 50; i++) {
     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
 }
 // "Hi there, I had a Billing"
@@ -127,9 +127,12 @@ let customer2 = {
 // );
 
 
-for (var i = 1; i < 11; i++) {
+for (var i = 1; i < 100; i++) {
     reset_customer(i);
 }
+
+reset_customer(1);
+reset_customer(2);
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -209,7 +212,7 @@ function handle_customer(message) {
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
             const endchat = response.includes("ENDCHAT");
-            //response.replace("ENDCHAT", "");
+            response.replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
