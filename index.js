@@ -66,7 +66,7 @@ app.post('/dms', async (req, res) => {
 // }
 
 
-const customers = {}
+var customers = {}
 
 let customer1 = {
     "id": "1",
@@ -85,9 +85,10 @@ DMS.sendTextMessage(
     "initialize",
     customers["1"].name,
     function (response) {
-        console.log("response")
+        console.log("response");
         customers["1"].state = "queue_select";
         customers["1"].last_msg_id++;
+        console.log("response_end");
     }
 );
 
