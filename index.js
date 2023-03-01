@@ -164,8 +164,8 @@ function reset_customer(id) {
 app.get('/reset', (req, res) => {
     reset_customer("1");
     reset_customer("2");
-    // reset_customer("3");
-    // reset_customer("4");
+    reset_customer("3");
+    reset_customer("4");
     res.status(200).send("success!");
 });
 
@@ -210,7 +210,7 @@ function handle_customer(message) {
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
             const endchat = response.includes("ENDCHAT");
-            response.replace("ENDCHAT", "");
+            //response.replace("ENDCHAT", "");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
