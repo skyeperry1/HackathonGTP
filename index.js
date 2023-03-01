@@ -55,7 +55,7 @@ app.post('/dms', async (req, res) => {
         });
 
     } catch (err) {
-        return res.status(401).send(err);
+        //return res.status(401).send(err);
     }
 });
 
@@ -65,42 +65,42 @@ const initiate_escalation_msgs = {
 }
 
 
-DMS.sendTextMessage(
-    "123", //
-    "123", //Unique id of the message
-    "Billing",
-    "Skye Perry",
-    function (response) {
-        //Return status from DMS
-        //return res.status(response.status).send(response.statusText);
-    }
-);
+// DMS.sendTextMessage(
+//     "123", //
+//     "123", //Unique id of the message
+//     "Billing",
+//     "Skye Perry",
+//     function (response) {
+//         //Return status from DMS
+//         //return res.status(response.status).send(response.statusText);
+//     }
+// );
 
-setTimeout(() => {
-    DMS.sendTextMessage(
-        "123", //
-        "1234", //Unique id of the message
-        "Billing",
-        "Skye Perry",
-        function (response) {
-            //Return status from DMS
-            //return res.status(response.status).send(response.statusText);
-        }
-    );
-}, "5000")
+// setTimeout(() => {
+//     DMS.sendTextMessage(
+//         "123", //
+//         "1234", //Unique id of the message
+//         "Billing",
+//         "Skye Perry",
+//         function (response) {
+//             //Return status from DMS
+//             //return res.status(response.status).send(response.statusText);
+//         }
+//     );
+// }, "5000")
 
-setTimeout(() => {
-    DMS.sendTextMessage(
-        "123", //
-        "1234", //Unique id of the message
-        "a question about billing",
-        "Skye Perry",
-        function (response) {
-            //Return status from DMS
-            //return res.status(response.status).send(response.statusText);
-        }
-    );
-}, "10000")
+// setTimeout(() => {
+//     DMS.sendTextMessage(
+//         "123", //
+//         "1234", //Unique id of the message
+//         "a question about billing",
+//         "Skye Perry",
+//         function (response) {
+//             //Return status from DMS
+//             //return res.status(response.status).send(response.statusText);
+//         }
+//     );
+// }, "10000")
 
 
 /***************************************************************************
