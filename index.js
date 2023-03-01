@@ -65,57 +65,154 @@ const initiate_escalation_msgs = {
 }
 
 
-// DMS.sendTextMessage(
-//     "123", //
-//     "123", //Unique id of the message
-//     "Billing",
-//     "Skye Perry",
-//     function (response) {
-//         //Return status from DMS
-//         //return res.status(response.status).send(response.statusText);
-//     }
-// );
+DMS.sendTextMessage(
+    "123", //
+    "123", //Unique id of the message
+    "initialize",
+    "Skye Perry",
+    function (response) {
+        //Return status from DMS
+        //return res.status(response.status).send(response.statusText);
+    }
+);
 
-// setTimeout(() => {
-//     DMS.sendTextMessage(
-//         "123", //
-//         "1234", //Unique id of the message
-//         "Billing",
-//         "Skye Perry",
-//         function (response) {
-//             //Return status from DMS
-//             //return res.status(response.status).send(response.statusText);
-//         }
-//     );
-// }, "5000")
+setTimeout(() => {
+    DMS.sendTextMessage(
+        "123", //
+        "1234", //Unique id of the message
+        "Billing",
+        "Skye Perry",
+        function (response) {
+            //Return status from DMS
+            //return res.status(response.status).send(response.statusText);
+        }
+    );
+}, "10000")
 
-// setTimeout(() => {
-//     DMS.sendTextMessage(
-//         "123", //
-//         "1234", //Unique id of the message
-//         "a question about billing",
-//         "Skye Perry",
-//         function (response) {
-//             //Return status from DMS
-//             //return res.status(response.status).send(response.statusText);
-//         }
-//     );
-// }, "10000")
+setTimeout(() => {
+    DMS.sendTextMessage(
+        "123", //
+        "12345", //Unique id of the message
+        "a question about billing",
+        "Skye Perry",
+        function (response) {
+            //Return status from DMS
+            //return res.status(response.status).send(response.statusText);
+        }
+    );
+}, "20000")
 
+const customers = {}
+
+let customer1 = {
+    "id": "1",
+    "state": "idle",
+    "name": "Skye Perry",
+    "last_msg_id": 1,
+    "conv_transcript": ""
+
+}
+
+customers[customer1.id] = customer1;
+
+DMS.sendTextMessage(
+    customers["1"].id, //
+    customers["1"].last_msg_id, //Unique id of the message
+    "initialize",
+    customers["1"].name,
+    function (response) {
+        //Return status from DMS
+        //return res.status(response.status).send(response.statusText);
+    }
+);
+
+customers["1"].state = "queue_select";
+customers["1"].last_msg_id += 1;
+
+function handle_customer(message) {
+    let customer = customers[message.customer_id]; //Get the customer_id from the message received
+    if (customer.state == "queue_select") {
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id + 1, //Unique id of the message
+            "Billing",
+            customer.name,
+            function (response) {
+                //Return status from DMS
+                //return res.status(response.status).send(response.statusText);
+                customers[message.customer_id].last_msg_id += 1;
+                customers[message.customer_id].state = "pre_chat_q";
+            }
+        );
+    } else if (customer.state == "pre_chat_q") {
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id + 1, //Unique id of the message
+            "I had a question about my account",
+            customer.name,
+            function (response) {
+                //Return status from DMS
+                //return res.status(response.status).send(response.statusText);
+                customers[message.customer_id].last_msg_id += 1;
+                customers[message.customer_id].state = "in_queue";
+            }
+        );
+    }
+}
 
 /***************************************************************************
  * Digital Messaging onTextMessage callback
  * @param {object} message message object recieved from the Digital Messaging Channel
  * This function is called when a text message is recieved from the Digital Messaging channel
  **************************************************************************/
+//  {
+// 	"type": "text",
+// 	"customer_id": "string",
+// 	"message_id": "string",
+// 	"csr_name": "string",
+// 	"text": ["string"],
+// 	"attachments": [{
+// 		"url": "string",
+// 		"content_type": "string",
+// 		"file_name": "string",
+// 		"size": numeric
+// 	}]
+// }
 DMS.onTextMessage = async (message) => {
     try {
-        let customer_id = message.customer_id; //Get the customer_id from the message received
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        handle_customer(message);
     }
     catch (err) {
         //handle error
     }
 }
+
+
+// //Menu Message object
+// {
+//     "type": "menu",
+//     "customer_id": "string",
+//     "message_id": "string",
+//     "csr_name": "string",
+//     "title": "string",
+//     "items": [
+//       {
+//         "text": "string",
+//         "payload": "string",
+//         "image_url": "string"
+//       }
+//     ]
+//   }
+DMS.onMenuMessage = async (message) => {
+    try {
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        handle_customer(message);
+    }
+    catch (err) {
+        //handle error
+    }
+};
 
 /***************************************************************************
  * Handle Signal interuption gracefully
