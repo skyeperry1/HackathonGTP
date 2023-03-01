@@ -173,74 +173,75 @@ function handle_customer(message) {
                 }
             );
         });
-
     }
 
-    /***************************************************************************
-     * Digital Messaging onTextMessage callback
-     * @param {object} message message object recieved from the Digital Messaging Channel
-     * This function is called when a text message is recieved from the Digital Messaging channel
-     **************************************************************************/
-    //  {
-    // 	"type": "text",
-    // 	"customer_id": "string",
-    // 	"message_id": "string",
-    // 	"csr_name": "string",
-    // 	"text": ["string"],
-    // 	"attachments": [{
-    // 		"url": "string",
-    // 		"content_type": "string",
-    // 		"file_name": "string",
-    // 		"size": numeric
-    // 	}]
-    // }
-    DMS.onTextMessage = async (message) => {
+}
 
-        try {
-            //let customer_id = message.customer_id; //Get the customer_id from the message received
-            handle_customer(message);
-        }
-        catch (err) {
-            //handle error
-        }
+/***************************************************************************
+ * Digital Messaging onTextMessage callback
+ * @param {object} message message object recieved from the Digital Messaging Channel
+ * This function is called when a text message is recieved from the Digital Messaging channel
+ **************************************************************************/
+//  {
+// 	"type": "text",
+// 	"customer_id": "string",
+// 	"message_id": "string",
+// 	"csr_name": "string",
+// 	"text": ["string"],
+// 	"attachments": [{
+// 		"url": "string",
+// 		"content_type": "string",
+// 		"file_name": "string",
+// 		"size": numeric
+// 	}]
+// }
+DMS.onTextMessage = async (message) => {
+
+    try {
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        handle_customer(message);
     }
+    catch (err) {
+        //handle error
+    }
+}
 
 
-    // //Menu Message object
-    // {
-    //     "type": "menu",
-    //     "customer_id": "string",
-    //     "message_id": "string",
-    //     "csr_name": "string",
-    //     "title": "string",
-    //     "items": [
-    //       {
-    //         "text": "string",
-    //         "payload": "string",
-    //         "image_url": "string"
-    //       }
-    //     ]
-    //   }
-    DMS.onMenuMessage = async (message) => {
-        try {
-            //let customer_id = message.customer_id; //Get the customer_id from the message received
-            handle_customer(message);
-        }
-        catch (err) {
-            //handle error
-        }
-    };
+// //Menu Message object
+// {
+//     "type": "menu",
+//     "customer_id": "string",
+//     "message_id": "string",
+//     "csr_name": "string",
+//     "title": "string",
+//     "items": [
+//       {
+//         "text": "string",
+//         "payload": "string",
+//         "image_url": "string"
+//       }
+//     ]
+//   }
+DMS.onMenuMessage = async (message) => {
+    try {
+        //let customer_id = message.customer_id; //Get the customer_id from the message received
+        handle_customer(message);
+    }
+    catch (err) {
+        //handle error
+    }
+};
 
-    /***************************************************************************
-     * Handle Signal interuption gracefully
-     * This terminates the process on Ctrl + C input when running the application locally through terminal
-     **************************************************************************/
-    process.on("SIGINT", function () {
-        process.exit();
-    });
+/***************************************************************************
+ * Handle Signal interuption gracefully
+ * This terminates the process on Ctrl + C input when running the application locally through terminal
+ **************************************************************************/
+process.on("SIGINT", function () {
+    process.exit();
+});
 
 
-    app.listen(PORT, () => {
-        console.log(`Server listening on ${PORT}`);
-    });
+app.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`);
+});
 // module.exports = app;
