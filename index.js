@@ -145,13 +145,13 @@ function handle_customer(message) {
 // }
 DMS.onTextMessage = async (message) => {
 
-    try {
-        //let customer_id = message.customer_id; //Get the customer_id from the message received
-        handle_customer(message);
-    }
-    catch (err) {
-        //handle error
-    }
+    // try {
+    //     //let customer_id = message.customer_id; //Get the customer_id from the message received
+    //     handle_customer(message);
+    // }
+    // catch (err) {
+    //     //handle error
+    // }
 }
 
 
@@ -171,13 +171,13 @@ DMS.onTextMessage = async (message) => {
 //     ]
 //   }
 DMS.onMenuMessage = async (message) => {
-    try {
-        //let customer_id = message.customer_id; //Get the customer_id from the message received
-        handle_customer(message);
-    }
-    catch (err) {
-        //handle error
-    }
+    // try {
+    //     //let customer_id = message.customer_id; //Get the customer_id from the message received
+    //     handle_customer(message);
+    // }
+    // catch (err) {
+    //     //handle error
+    // }
 };
 
 /***************************************************************************
