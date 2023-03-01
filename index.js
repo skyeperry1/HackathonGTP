@@ -140,8 +140,13 @@ reset_customer("2");
 // reset_customer("4");
 
 function reset_customer(id) {
-    customers[id] = customer1;
-    customers[id].id = id;
+    customers[id] = {
+        "id": id,
+        "state": "idle",
+        "name": "Sarah Connor",
+        "last_msg_id": 1,
+        "conv_transcript": ""
+    };
 
     DMS.sendTextMessage(
         customers[id].id, //
