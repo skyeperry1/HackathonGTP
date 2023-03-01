@@ -93,13 +93,23 @@ var customers = {}
 let customer1 = {
     "id": "1",
     "state": "idle",
-    "name": "Skye Perry",
+    "name": "Sarah Connor",
+    "last_msg_id": 1,
+    "conv_transcript": ""
+
+}
+
+let customer2 = {
+    "id": "2",
+    "state": "idle",
+    "name": "John Connor",
     "last_msg_id": 1,
     "conv_transcript": ""
 
 }
 
 customers[customer1.id] = customer1;
+customers[customer2.id] = customer2;
 
 DMS.sendTextMessage(
     customers["1"].id, //
@@ -112,6 +122,16 @@ DMS.sendTextMessage(
     }
 );
 
+DMS.sendTextMessage(
+    customers["12"].id, //
+    customers["2"].last_msg_id, //Unique id of the message
+    "escalate",
+    customers["2"].name,
+    function (response) {
+        customers["2"].state = "queue_select";
+        customers["2"].last_msg_id++;
+    }
+);
 
 
 function handle_customer(message) {
