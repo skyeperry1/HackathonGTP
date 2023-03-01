@@ -15,7 +15,7 @@ const DMS_CONFIG = require('./dms_config.json');
 // Initialize Digital Messaging framework
 var DMS = dms(DMS_CONFIG);
 //Enable request logging in DMS
-//DMS.logRequests(true);
+DMS.logRequests(false);
 
 /*****************************
  * Open AI
@@ -50,9 +50,9 @@ async function callOpenAI(customer) {
     }
 }
 
-for (let i = 0; i < 501; i++) {
-    DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
-}
+// for (let i = 0; i < 501; i++) {
+//     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
+// }
 // "Hi there, I had a Billing"
 // CSR:
 
