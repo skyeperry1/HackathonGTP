@@ -1,0 +1,5 @@
+{
+    "JWT_SECRET": "b4549657-9d34-427f-9db8-267e48ea4a4c",
+    "CHANNEL_ID": "6c01aa1f-aaaf-4eb8-bc10-6e0d36d0c78f",
+    "API_URL": "https://incoming.dev.pega.digital/messages"
+}
