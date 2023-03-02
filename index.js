@@ -113,7 +113,9 @@ let customer2 = {
     "conv_transcript": ""
 
 }
-callOpenAI(customer1);
+const tmp = callOpenAI(customer1);
+
+tmp.then((response) => { console.log("response", response) });
 // customers[customer1.id] = customer1;
 
 
@@ -176,67 +178,67 @@ function reset_customer(id) {
 // });
 
 
-// function handle_customer(message) {
-//     console.log("handle customer");
-//     let customer = customers[message.customer_id]; //Get the customer_id from the message received
-//     if (customer.state == "queue_select") {
-//         DMS.sendTextMessage(
-//             customer.id, //
-//             customer.last_msg_id + 1, //Unique id of the message
-//             "Billing",
-//             customer.name,
-//             function (response) {
-//                 //Return status from DMS
-//                 //return res.status(response.status).send(response.statusText);
-//                 customers[message.customer_id].last_msg_id++;
-//                 customers[message.customer_id].state = "pre_chat_q";
-//             }
-//         );
-//     } else if (customer.state == "pre_chat_q") {
-//         DMS.sendTextMessage(
-//             customer.id, //
-//             customer.last_msg_id + 1, //Unique id of the message
-//             "I need to change my address",
-//             customer.name,
-//             function (response) {
-//                 //Return status from DMS
-//                 //return res.status(response.status).send(response.statusText);
-//                 customers[message.customer_id].last_msg_id++;
-//                 customers[message.customer_id].state = "in_queue";
-//                 customers[message.customer_id].transcript += generateTranscriptEntry("I need to change my address");
-//             }
-//         );
-//     } else if (customer.state != "connected" & message.text.includes("You have been connected")) {
+function handle_customer(message) {
+    console.log("handle customer");
+    let customer = customers[message.customer_id]; //Get the customer_id from the message received
+    if (customer.state == "queue_select") {
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id + 1, //Unique id of the message
+            "Billing",
+            customer.name,
+            function (response) {
+                //Return status from DMS
+                //return res.status(response.status).send(response.statusText);
+                customers[message.customer_id].last_msg_id++;
+                customers[message.customer_id].state = "pre_chat_q";
+            }
+        );
+    } else if (customer.state == "pre_chat_q") {
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id + 1, //Unique id of the message
+            "I need to change my address",
+            customer.name,
+            function (response) {
+                //Return status from DMS
+                //return res.status(response.status).send(response.statusText);
+                customers[message.customer_id].last_msg_id++;
+                customers[message.customer_id].state = "in_queue";
+                customers[message.customer_id].transcript += generateTranscriptEntry("I need to change my address");
+            }
+        );
+    } else if (customer.state != "connected" & message.text.includes("You have been connected")) {
 
-//         customers[message.customer_id].last_msg_id++;
-//         customers[message.customer_id].state = "connected";
+        customers[message.customer_id].last_msg_id++;
+        customers[message.customer_id].state = "connected";
 
-//     } else if (customer.state == "connected") {
-//         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
-//         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
-//         CUSTOMER_response.then((response) => {
-//             //const endchat = response.includes("ENDCHAT");
-//             //response.replace("ENDCHAT", "\n");
-//             DMS.sendTextMessage(
-//                 customer.id, //
-//                 customer.last_msg_id + 1, //Unique id of the message
-//                 response,
-//                 customer.name,
-//                 function (res) {
-//                     customers[message.customer_id].last_msg_id++;
-//                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
-//                     // if (endchat) {
-//                     //     DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
-//                     //         reset_customer(message.customer_id);
-//                     //     });
+    } else if (customer.state == "connected") {
+        customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
+        const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
+        CUSTOMER_response.then((response) => {
+            //const endchat = response.includes("ENDCHAT");
+            //response.replace("ENDCHAT", "\n");
+            DMS.sendTextMessage(
+                customer.id, //
+                customer.last_msg_id + 1, //Unique id of the message
+                response,
+                customer.name,
+                function (res) {
+                    customers[message.customer_id].last_msg_id++;
+                    customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
+                    // if (endchat) {
+                    //     DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
+                    //         reset_customer(message.customer_id);
+                    //     });
 
-//                     // }
-//                 }
-//             );
-//         });
-//     }
+                    // }
+                }
+            );
+        });
+    }
 
-// }
+}
 
 /***************************************************************************
  * Digital Messaging onTextMessage callback
