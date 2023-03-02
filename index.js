@@ -210,9 +210,10 @@ DMS.onMenuMessage = async (message) => {
 
 
 DMS.onCsrEndSession = async (customer_id) => {
+    customers[customer_id].state = "resolved";
     try {
         DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
-            customers[customer_id].state = "resolved";
+
             reset_customer(customers[customer_id]);
         });
     }
