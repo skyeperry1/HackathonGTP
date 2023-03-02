@@ -131,7 +131,7 @@ function handle_customer(message) {
         }
 
 
-        if (message.title && message.title.trim() === "What do you need help with?") {
+        if (message.type == "menu" && message.title.trim() === "What do you need help with?") {
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id++, //Unique id of the message
@@ -146,7 +146,7 @@ function handle_customer(message) {
             );
         }
 
-        if (message.text && message.text.includes("Thank you. What billing question can we help you with")) {
+        if (message.type == "text" && message.text.includes("Thank you. What billing question can we help you with")) {
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id++, //Unique id of the message
@@ -161,7 +161,7 @@ function handle_customer(message) {
             );
         }
 
-        if (message.text && message.text.includes("connected")) {
+        if (message.type == "text" && message.text.includes("connected")) {
             customers[message.customer_id].state = "connected";
         }
     } catch (err) {
