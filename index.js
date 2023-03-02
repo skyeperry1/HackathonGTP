@@ -139,7 +139,7 @@ function handle_customer(message) {
             );
         });
     }
-    if (message.title.trim() == "What do you need help with?") {
+    if (message.title == "What do you need help with?") {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id++, //Unique id of the message
@@ -155,7 +155,7 @@ function handle_customer(message) {
     }
 
 
-    if (message.text.includes("You have been connected with")) {
+    if (message.text.includes("connected")) {
         customers[message.customer_id].state = "connected";
     }
 }
