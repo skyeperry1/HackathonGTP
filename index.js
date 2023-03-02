@@ -21,7 +21,7 @@ DMS.logRequests(true);
  * Open AI
  ****************************/
 const OpenAI = require('openai-api');
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 const openai = new OpenAI(OPENAI_API_KEY);
 
 
@@ -45,7 +45,8 @@ async function callOpenAI(customer) {
         // const open_ai_json_response = JSON.parse(open_ai_response);
         // console.log("callOpenAI response", open_ai_json_response);
         return open_ai_response;
-    } catch {
+    } catch (err) {
+        console.log(err)
         return 0;
     }
 }
@@ -88,7 +89,6 @@ app.post('/dms', async (req, res) => {
     }
 });
 
-//fuck
 // const initiate_escalation_msgs = {
 //     "queues": ["Billing"]
 // }
@@ -116,29 +116,10 @@ let customer2 = {
 const tmp = callOpenAI(customer1);
 
 tmp.then((response) => { console.log("response", response) });
-// customers[customer1.id] = customer1;
 
 
-// DMS.sendTextMessage(
-//     customers["1"].id, //
-//     customers["1"].last_msg_id, //Unique id of the message
-//     "escalate",
-//     customers["1"].name,
-//     function (response) {
-//         customers["1"].state = "queue_select";
-//         customers["1"].last_msg_id++;
-//     }
-// );
-
-
-// for (var i = 1; i < 100; i++) {
-//     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i, }, function () {
-
-//     });
-// }
-
-// reset_customer(1);
-// reset_customer(2);
+reset_customer(1);
+reset_customer(2);
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -217,8 +198,8 @@ function handle_customer(message) {
         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
-            //const endchat = response.includes("ENDCHAT");
-            //response.replace("ENDCHAT", "\n");
+            const endchat = response.includes("ENDCHAT");
+            response.replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
@@ -227,12 +208,12 @@ function handle_customer(message) {
                 function (res) {
                     customers[message.customer_id].last_msg_id++;
                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
-                    // if (endchat) {
-                    //     DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
-                    //         reset_customer(message.customer_id);
-                    //     });
+                    if (endchat) {
+                        DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
+                            reset_customer(message.customer_id);
+                        });
 
-                    // }
+                    }
                 }
             );
         });
@@ -318,3 +299,29 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 // module.exports = app;
+
+
+
+
+
+
+// customers[customer1.id] = customer1;
+
+
+// DMS.sendTextMessage(
+//     customers["1"].id, //
+//     customers["1"].last_msg_id, //Unique id of the message
+//     "escalate",
+//     customers["1"].name,
+//     function (response) {
+//         customers["1"].state = "queue_select";
+//         customers["1"].last_msg_id++;
+//     }
+// );
+
+
+// for (var i = 1; i < 100; i++) {
+//     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i, }, function () {
+
+//     });
+// }
