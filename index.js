@@ -21,7 +21,7 @@ DMS.logRequests(true);
  * Open AI
  ****************************/
 const OpenAI = require('openai-api');
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 const openai = new OpenAI(OPENAI_API_KEY);
 
 
