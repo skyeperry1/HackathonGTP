@@ -161,8 +161,8 @@ function handle_customer(message) {
                 );
             }
 
-            if (message.text.includes("connected")) {
-                customers[message.customer_id].state = "You have been connected";
+            if (message.text.includes("You have been connected")) {
+                customers[message.customer_id].state = "connected";
             }
         }
 
