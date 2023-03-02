@@ -129,11 +129,22 @@ function handle_customer(message) {
                 //Return status from DMS
                 //return res.status(response.status).send(response.statusText);
                 customers[message.customer_id].last_msg_id++;
-                customers[message.customer_id].state = "pre_chat_q";
+                customers[message.customer_id].state = "escalating";
             }
         );
     } else if (message.text.trim == "Thank you. What billing question can we help you with ?") {
-
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id, //Unique id of the message
+            "I need to change my address",
+            customer.name,
+            function (response) {
+                //Return status from DMS
+                //return res.status(response.status).send(response.statusText);
+                customers[message.customer_id].last_msg_id++;
+                customers[message.customer_id].state = "escalating";
+            }
+        );
     } else if (message.text.includes("You have been connected with")) {
         customers[message.customer_id].state = "connected";
     }
