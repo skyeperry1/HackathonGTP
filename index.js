@@ -50,6 +50,8 @@ async function callOpenAI(customer) {
     }
 }
 
+callOpenAI(customer1);
+
 for (let i = 1; i < 50; i++) {
     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
 }
@@ -133,8 +135,8 @@ let customer2 = {
 //     });
 // }
 
-reset_customer(1);
-reset_customer(2);
+// reset_customer(1);
+// reset_customer(2);
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
