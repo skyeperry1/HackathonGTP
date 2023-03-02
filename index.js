@@ -29,7 +29,7 @@ const Customer = require("./customer.js");
 const generator = require('./open_ai.js');
 
 let max_customers = 3;
-var customers = {};
+var customers = { "customer123": "" };
 
 // let dan = new Customer(1, "change mailing address");
 // dan.init(function () {
