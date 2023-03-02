@@ -95,6 +95,7 @@ function sendMessageToDMS(customer, message) {
 
 function handle_customer(message) {
     try {
+
         let customer = customers[message.customer_id]; //Get the customer_id from the message received
         console.log("customer state", customer.state);
         //console.log("message.text includes", message.text.includes("Thank you. What billing question can we help you with"));
@@ -103,7 +104,7 @@ function handle_customer(message) {
 
 
 
-        if (customer.state == "connected") {
+        if (customer.state === "connected") {
             customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
             const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
             CUSTOMER_response.then((response) => {
