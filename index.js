@@ -95,7 +95,7 @@ function sendMessageToDMS(customer, message) {
 function handle_customer(message) {
 
     let customer = customers[message.customer_id]; //Get the customer_id from the message received
-
+    console.log(message.text)
     if (customer.state == "connected") {
         customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
@@ -132,7 +132,7 @@ function handle_customer(message) {
                 customers[message.customer_id].state = "escalating";
             }
         );
-    } else if (message.text.includes("Thank you. What billing question can we help you with ?")) {
+    } else if (message.text == "Thank you. What billing question can we help you with ?") {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id, //Unique id of the message
