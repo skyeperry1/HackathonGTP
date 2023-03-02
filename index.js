@@ -165,6 +165,10 @@ function handle_customer(message) {
             if (message.text.includes("You have been connected")) {
                 customers[message.customer_id].state = "connected";
             }
+
+            if (message.text.includes("left the conversation.")) {
+                customers[message.customer_id].state = "resolved";
+            }
         }
 
     } catch (err) {
