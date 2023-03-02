@@ -52,9 +52,9 @@ async function callOpenAI(customer) {
 
 
 
-for (let i = 1; i < 50; i++) {
-    DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
-}
+// for (let i = 1; i < 50; i++) {
+//     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i });
+// }
 // "Hi there, I had a Billing"
 // CSR:
 
