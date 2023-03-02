@@ -51,6 +51,10 @@ initialilize_customers(function () {
     console.log("customers:", customers);
 });
 
+function reset_customer(customer, new_customer = false) {
+    customers[customer.id].state = "escalating";
+    sendMessageToDMS(customers[customer.id], "escalate");
+}
 
 /***************************************************************************
  * DIGITAL MESSAGING ENDPOINT
@@ -206,8 +210,10 @@ DMS.onMenuMessage = async (message) => {
 
 DMS.onCsrEndSession = async (customer_id) => {
     try {
-        let customer_id = message.customer_id; //Get the customer_id from the message received
-        customers[message.customer_id].state = "resolved";
+        DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
+            customers[customer_id].state = "resolved";
+            reset_customer(customers[customer_id]);
+        });
     }
     catch (err) {
         //handle error
