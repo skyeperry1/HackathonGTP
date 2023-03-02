@@ -113,9 +113,9 @@ let customer2 = {
     "conv_transcript": ""
 
 }
-const tmp = callOpenAI(customer1);
+// const tmp = callOpenAI(customer1);
 
-tmp.then((response) => { console.log("response", response) });
+// tmp.then((response) => { console.log("response", response) });
 
 
 reset_customer(1);
@@ -243,7 +243,7 @@ DMS.onTextMessage = async (message) => {
 
     try {
         //let customer_id = message.customer_id; //Get the customer_id from the message received
-        //handle_customer(message);
+        handle_customer(message);
     }
     catch (err) {
         //handle error
@@ -269,7 +269,7 @@ DMS.onTextMessage = async (message) => {
 DMS.onMenuMessage = async (message) => {
     try {
         //let customer_id = message.customer_id; //Get the customer_id from the message received
-        //handle_customer(message);
+        handle_customer(message);
     }
     catch (err) {
         //handle error
@@ -279,8 +279,8 @@ DMS.onMenuMessage = async (message) => {
 
 DMS.onCsrEndSession = async (customer_id) => {
     try {
-        //let customer_id = message.customer_id; //Get the customer_id from the message received
-        //reset_customer(customer_id);
+        let customer_id = message.customer_id; //Get the customer_id from the message received
+        reset_customer(customer_id);
     }
     catch (err) {
         //handle error
