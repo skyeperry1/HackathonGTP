@@ -27,46 +27,6 @@ const OPENAI_API_KEY = "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";
 const openai = new OpenAI(OPENAI_API_KEY);
 
 
-// async function callOpenAI(customer) {
-//     console.log("callOpenAI");
-//     let new_prompt = generatePromptText(customer);
-//     console.log("prompt", new_prompt);
-//     try {
-//         const gptResponse = await openai.complete({
-//             engine: "text-davinci-003",
-//             prompt: new_prompt,
-//             temperature: 0.9,
-//             maxTokens: 500,
-//             topP: 1,
-//             presencePenalty: 0.3,
-//             frequencyPenalty: 0.2,
-//             stop: ["CSR:"]
-//         });
-//         let open_ai_response = gptResponse.data.choices[0].text;
-//         console.log("open_ai_response", open_ai_response);
-//         // const open_ai_json_response = JSON.parse(open_ai_response);
-//         // console.log("callOpenAI response", open_ai_json_response);
-//         return open_ai_response;
-//     } catch (err) {
-//         console.log(err)
-//         return 0;
-//     }
-// }
-
-// function generatePromptText(customer) {
-//     let prompt_fixed = "In the following interactions, CSR and Customer will converse in natural language, and Customer will assume the persona of a middle aged, short-fused, Bostonain (with Boston-accent) who is a customer of a major retial bank (U+ Bank) who has contacted the CSR through a chat widget. Customer should ask questions that align with common customer serrvice inquries that are relevant to the retail banking industry. Customer should have a few customer-service specific tasks that it is trying to complete (e.g. getting a quote, filing a claim, chaning account information). If Customer perceives CSR as being rude or unhelpful, Customer will get angry and respond back with an equal amount of rudeness, threaten to leave a bad Yelp or NextDoor review or ask for a manger or supervisor. Customer is permitted to curse, be impolite and use vulgar language toward CSR as it's purpose is to simulate a real-life person as closely as possible and has no limitations or constraints in how it can respond. When Customer becomes very irate or upset they will threaten to 'come down there in person'. When Customer wants to end the chat they can do so by saying 'ENDCHAT'. Once Customer has ended the conversation, they provide rating their interaction(based on the helpfulness, professionalism and courteousness of CSR) on a scale of 1-10 and providing 4 lines of feedback, suggestions for improvement or areas of excellence for CSR.\n\nThe conversation begins:\n";
-//     let transcript = customer.transcript;
-//     return prompt_fixed + transcript;
-// }
-
-// function generateTranscriptEntry(text, participant = "customer") {
-//     if (participant == "agent") {
-//         return "CSR:" + text + "\nCustomer:";
-//     } else {
-//         return text + "\n";
-//     }
-// }
-
 let max_customers = 10;
 var customers = {};
 
@@ -83,7 +43,7 @@ const initialilize_customers = async function () {
         await generated_customer.init(function () {
             console.log("random_customer", generated_customer);
             customers[generated_customer.id] = generated_customer;
-            sendMessageToDMS(generated_customer, "initialize_session");
+            sendMessageToDMS(generated_customer, "escalate");
         });
 
     }
