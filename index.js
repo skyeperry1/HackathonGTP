@@ -140,7 +140,7 @@ function handle_customer(message) {
             );
         });
     }
-    if (message.title == "What do you need help with?") {
+    if (message.title.includes("What do you need help with?")) {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id++, //Unique id of the message
