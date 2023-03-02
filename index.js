@@ -121,6 +121,7 @@ function handle_customer(message) {
         customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
         const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
+            console.log("response", response);
             const endchat = response.includes("ENDCHAT");
             response.replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
@@ -143,7 +144,7 @@ function handle_customer(message) {
     }
 
 
-    if (message.title.includes("What do you need help with?")) {
+    if (message.title.trim === "What do you need help with?") {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id++, //Unique id of the message
