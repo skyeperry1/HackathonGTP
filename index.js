@@ -22,10 +22,11 @@ const Customer = require("./customer.js");
 /*****************************
  * Open AI
  ****************************/
-const OpenAI = require('openai-api');
-const OPENAI_API_KEY = "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";
-const openai = new OpenAI(OPENAI_API_KEY);
+// const OpenAI = require('openai-api');
+// const OPENAI_API_KEY = "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";
+// const openai = new OpenAI(OPENAI_API_KEY);
 
+const generator = require('./open_ai.js');
 
 let max_customers = 3;
 var customers = {};
@@ -117,7 +118,7 @@ function handle_customer(message) {
 
     if (customer.state == "connected") {
         customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
-        const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
+        const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
             const endchat = response.includes("ENDCHAT");
             response.replace("ENDCHAT", "\n");
@@ -138,8 +139,7 @@ function handle_customer(message) {
                 }
             );
         });
-    }
-    if (message.title == "What do you need help with?") {
+    } else if (message.title == "What do you need help with?") {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id++, //Unique id of the message
