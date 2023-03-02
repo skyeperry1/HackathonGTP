@@ -213,8 +213,8 @@ function handle_customer(message) {
         customers[message.customer_id].transcript += generateTranscriptEntry(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
-            const endchat = response.includes("ENDCHAT");
-            response.replace("ENDCHAT", "\n");
+            //const endchat = response.includes("ENDCHAT");
+            //response.replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
@@ -223,12 +223,12 @@ function handle_customer(message) {
                 function (res) {
                     customers[message.customer_id].last_msg_id++;
                     customers[message.customer_id].transcript += generateTranscriptEntry(response, "customer");
-                    if (endchat) {
-                        DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
-                            reset_customer(message.customer_id);
-                        });
+                    // if (endchat) {
+                    //     DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
+                    //         reset_customer(message.customer_id);
+                    //     });
 
-                    }
+                    // }
                 }
             );
         });
