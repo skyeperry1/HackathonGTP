@@ -84,7 +84,7 @@ function sendMessageToDMS(customer, message) {
         customer.id, //
         customer.last_msg_id, //Unique id of the message
         message,
-        customer.name,
+        customer.bio.name,
         function (response) {
             //customers[id].state = "escalate";
             customers[customer.id].last_msg_id++;
@@ -95,7 +95,9 @@ function sendMessageToDMS(customer, message) {
 function handle_customer(message) {
 
     let customer = customers[message.customer_id]; //Get the customer_id from the message received
-    console.log(message.text)
+    console.log("message.text", message.text);
+    console.log("message.text includes", message.text.includes("Thank you. What billing question can we help you with"));
+
     if (customer.state == "connected") {
         customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
@@ -106,7 +108,7 @@ function handle_customer(message) {
                 customer.id, //
                 customer.last_msg_id, //Unique id of the message
                 response,
-                customer.name,
+                customer.bio.name,
                 function (res) {
                     customers[message.customer_id].last_msg_id++;
                     customers[message.customer_id].appendMessageToTranscript(response, "customer");
@@ -119,12 +121,13 @@ function handle_customer(message) {
                 }
             );
         });
-    } else if (message.title.trim() == "What do you need help with?") {
+    }
+    else if (message.title.trim() == "What do you need help with?") {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id, //Unique id of the message
             "Billing",
-            customer.name,
+            customer.bio.name,
             function (response) {
                 //Return status from DMS
                 //return res.status(response.status).send(response.statusText);
@@ -137,7 +140,7 @@ function handle_customer(message) {
             customer.id, //
             customer.last_msg_id, //Unique id of the message
             "I need to change my address",
-            customer.name,
+            customer.bio.name,
             function (response) {
                 //Return status from DMS
                 //return res.status(response.status).send(response.statusText);
