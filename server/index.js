@@ -215,7 +215,7 @@ function handle_customer(message) {
         CUSTOMER_response.then((response) => {
 
             const endchat = response.toString().includes('ENDCHAT');
-            response.replace("ENDCHAT", "\n");
+            response.toString().replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
