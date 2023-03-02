@@ -95,74 +95,77 @@ function sendMessageToDMS(customer, message) {
 }
 
 function handle_customer(message) {
-
-    let customer = customers[message.customer_id]; //Get the customer_id from the message received
-    console.log("customer state", customer.state);
-    console.log("message.text includes", message.text.includes("Thank you. What billing question can we help you with"));
-
-
+    try {
+        let customer = customers[message.customer_id]; //Get the customer_id from the message received
+        console.log("customer state", customer.state);
+        console.log("message.text includes", message.text.includes("Thank you. What billing question can we help you with"));
 
 
 
-    if (customer.state == "connected") {
-        customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
-        const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
-        CUSTOMER_response.then((response) => {
-            console.log("response", response);
-            const endchat = response.includes("ENDCHAT");
-            response.replace("ENDCHAT", "\n");
+
+
+        if (customer.state == "connected") {
+            customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
+            const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
+            CUSTOMER_response.then((response) => {
+                console.log("response", response);
+                const endchat = response.includes("ENDCHAT");
+                response.replace("ENDCHAT", "\n");
+                DMS.sendTextMessage(
+                    customer.id, //
+                    customer.last_msg_id++, //Unique id of the message
+                    response,
+                    customer.bio.name,
+                    function (res) {
+                        customers[message.customer_id].last_msg_id++;
+                        customers[message.customer_id].appendMessageToTranscript(response, "customer");
+                        if (endchat) {
+                            DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
+                                customers[message.customer_id].state = "resolved";
+                            });
+
+                        }
+                    }
+                );
+            });
+        }
+
+
+        if (message.title && message.title.trim() === "What do you need help with?") {
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id++, //Unique id of the message
-                response,
+                "Billing",
                 customer.bio.name,
-                function (res) {
+                function (response) {
+                    //Return status from DMS
+                    //return res.status(response.status).send(response.statusText);
                     customers[message.customer_id].last_msg_id++;
-                    customers[message.customer_id].appendMessageToTranscript(response, "customer");
-                    if (endchat) {
-                        DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
-                            customers[message.customer_id].state = "resolved";
-                        });
-
-                    }
+                    customers[message.customer_id].state = "escalating";
                 }
             );
-        });
-    }
+        }
 
+        if (message.text && message.text.includes("Thank you. What billing question can we help you with")) {
+            DMS.sendTextMessage(
+                customer.id, //
+                customer.last_msg_id++, //Unique id of the message
+                "I need to change my address",
+                customer.bio.name,
+                function (response) {
+                    //Return status from DMS
+                    //return res.status(response.status).send(response.statusText);
+                    customers[message.customer_id].last_msg_id++;
+                    customers[message.customer_id].state = "escalating";
+                }
+            );
+        }
 
-    if (message.title && message.title.trim() === "What do you need help with?") {
-        DMS.sendTextMessage(
-            customer.id, //
-            customer.last_msg_id++, //Unique id of the message
-            "Billing",
-            customer.bio.name,
-            function (response) {
-                //Return status from DMS
-                //return res.status(response.status).send(response.statusText);
-                customers[message.customer_id].last_msg_id++;
-                customers[message.customer_id].state = "escalating";
-            }
-        );
-    }
-
-    if (message.text && message.text.includes("Thank you. What billing question can we help you with")) {
-        DMS.sendTextMessage(
-            customer.id, //
-            customer.last_msg_id++, //Unique id of the message
-            "I need to change my address",
-            customer.bio.name,
-            function (response) {
-                //Return status from DMS
-                //return res.status(response.status).send(response.statusText);
-                customers[message.customer_id].last_msg_id++;
-                customers[message.customer_id].state = "escalating";
-            }
-        );
-    }
-
-    if (message.text && message.text.includes("connected")) {
-        customers[message.customer_id].state = "connected";
+        if (message.text && message.text.includes("connected")) {
+            customers[message.customer_id].state = "connected";
+        }
+    } catch (err) {
+        console.log(err);
     }
 }
 
