@@ -95,7 +95,7 @@ function sendMessageToDMS(customer, message) {
 function handle_customer(message) {
 
     let customer = customers[message.customer_id]; //Get the customer_id from the message received
-    console.log("message.text", message.text);
+    console.log("customer state", customer.state);
     console.log("message.text includes", message.text.includes("Thank you. What billing question can we help you with"));
 
 
