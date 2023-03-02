@@ -139,13 +139,13 @@
      };
  
      DMS.sendTextMessage(
-         customers[id].id, //
-         customers[id].last_msg_id, //Unique id of the message
+         customers[new_id].id, //
+         customers[new_id].last_msg_id, //Unique id of the message
          "escalate",
-         customers[id].name,
+         customers[new_id].name,
          function (response) {
-             customers[id].state = "queue_select";
-             customers[id].last_msg_id++;
+             customers[new_id].state = "queue_select";
+             customers[new_id].last_msg_id++;
          }
      );
      });
