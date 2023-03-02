@@ -106,7 +106,7 @@ function handle_customer(message) {
             response.replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
                 customer.id, //
-                customer.last_msg_id, //Unique id of the message
+                customer.last_msg_id++, //Unique id of the message
                 response,
                 customer.bio.name,
                 function (res) {
@@ -125,7 +125,7 @@ function handle_customer(message) {
     if (message.title.trim() == "What do you need help with?") {
         DMS.sendTextMessage(
             customer.id, //
-            customer.last_msg_id, //Unique id of the message
+            customer.last_msg_id++, //Unique id of the message
             "Billing",
             customer.bio.name,
             function (response) {
@@ -140,7 +140,7 @@ function handle_customer(message) {
     if (message.text.includes("Thank you. What billing question can we help you with")) {
         DMS.sendTextMessage(
             customer.id, //
-            customer.last_msg_id, //Unique id of the message
+            customer.last_msg_id++, //Unique id of the message
             "I need to change my address",
             customer.bio.name,
             function (response) {
