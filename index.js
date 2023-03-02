@@ -214,8 +214,8 @@ function handle_customer(message) {
         const CUSTOMER_response = callOpenAI(customers[message.customer_id]);
         CUSTOMER_response.then((response) => {
 
-            const endchat = response.toString().includes('ENDCHAT');
-            response.toString().replace("ENDCHAT", "\n");
+            const endchat = response.includes('ENDCHAT');
+            response.replace("ENDCHAT", "\n");
             DMS.sendTextMessage(
                 customer.id, //
                 customer.last_msg_id + 1, //Unique id of the message
