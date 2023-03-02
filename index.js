@@ -44,6 +44,7 @@ const initialilize_customers = async function () {
         await generated_customer.init(function () {
             console.log("random_customer", generated_customer);
             customers[generated_customer.id] = generated_customer;
+            customers[generated_customer.id].state = "escalating";
             sendMessageToDMS(generated_customer, "escalate");
         });
 
@@ -140,6 +141,8 @@ function handle_customer(message) {
             );
         });
     }
+
+
     if (message.title.includes("What do you need help with?")) {
         DMS.sendTextMessage(
             customer.id, //
