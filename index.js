@@ -151,12 +151,12 @@ function reset_customer(id) {
 }
 
 
-// app.get('/reset', (req, res) => {
-//     for (var i = 1; i < 11; i++) {
-//         reset_customer(i);
-//     }
-//     res.status(200).send("success!");
-// });
+app.get('/reset', (req, res) => {
+    for (var i = 1; i < 11; i++) {
+        reset_customer(i);
+    }
+    res.status(200).send("success!");
+});
 
 
 function handle_customer(message) {
