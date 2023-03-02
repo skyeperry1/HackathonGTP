@@ -132,7 +132,7 @@ function handle_customer(message) {
                 customers[message.customer_id].state = "escalating";
             }
         );
-    } else if (message.text.trim == "Thank you. What billing question can we help you with ?") {
+    } else if (message.text.includes("Thank you. What billing question can we help you with ?")) {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id, //Unique id of the message
