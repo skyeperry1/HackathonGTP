@@ -101,20 +101,7 @@ function handle_customer(message) {
     console.log("message.text includes", message.text.includes("Thank you. What billing question can we help you with"));
 
 
-    if (message.text.includes("Thank you. What billing question can we help you with")) {
-        DMS.sendTextMessage(
-            customer.id, //
-            customer.last_msg_id++, //Unique id of the message
-            "I need to change my address",
-            customer.bio.name,
-            function (response) {
-                //Return status from DMS
-                //return res.status(response.status).send(response.statusText);
-                customers[message.customer_id].last_msg_id++;
-                customers[message.customer_id].state = "escalating";
-            }
-        );
-    }
+
 
 
     if (customer.state == "connected") {
@@ -144,7 +131,7 @@ function handle_customer(message) {
     }
 
 
-    if (message.title.trim() === "What do you need help with?") {
+    if (message.title && message.title.trim() === "What do you need help with?") {
         DMS.sendTextMessage(
             customer.id, //
             customer.last_msg_id++, //Unique id of the message
@@ -159,8 +146,22 @@ function handle_customer(message) {
         );
     }
 
+    if (message.text && message.text.includes("Thank you. What billing question can we help you with")) {
+        DMS.sendTextMessage(
+            customer.id, //
+            customer.last_msg_id++, //Unique id of the message
+            "I need to change my address",
+            customer.bio.name,
+            function (response) {
+                //Return status from DMS
+                //return res.status(response.status).send(response.statusText);
+                customers[message.customer_id].last_msg_id++;
+                customers[message.customer_id].state = "escalating";
+            }
+        );
+    }
 
-    if (message.text.includes("connected")) {
+    if (message.text && message.text.includes("connected")) {
         customers[message.customer_id].state = "connected";
     }
 }
