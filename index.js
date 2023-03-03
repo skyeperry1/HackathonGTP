@@ -125,6 +125,7 @@ function handle_customer(message) {
 
         if (customer.state === "connected" && message.author != "bot") {
             customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
+            DMS.sendTypingIndicator(message.customer_id);
             const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
             CUSTOMER_response.then((response) => {
                 console.log("response", response);
@@ -201,7 +202,10 @@ function handle_customer(message) {
 //     res.status(200).send("success!");
 // });
 
-
+//Crystal Claw Incorporated
+// {
+//  "type": "typing_indicator",
+//  "customer_id": "string", }
 /***************************************************************************
  * Digital Messaging onTextMessage callback
  * @param {object} message message object recieved from the Digital Messaging Channel
