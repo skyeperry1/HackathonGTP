@@ -41,7 +41,7 @@ module.exports = class Bio {
         bio_prompt_txt += "Technological Skill(their ability to complete tasks related to tech, scale 1-10):" + this.technological_aptitude + "\n";
         bio_prompt_txt += "I.Q.: " + this.iq + "\n";
         bio_prompt_txt += "Occupation: " + this.occupation + "\n";
-        if (this.family) {
+        if (Array.isArray(this.family)) {
             bio_prompt_txt += "Family:"
             this.family.forEach(familyMemeber => {
                 bio_prompt_txt += "(" + familyMemeber.name + "," + familyMemeber.age, + "," + familyMemeber.relationship + ")";
@@ -49,7 +49,7 @@ module.exports = class Bio {
             bio_prompt_txt += "\n";
         }
         bio_prompt_txt += "Hobbies:";
-        if (this.hobbies) {
+        if (Array.isArray(this.hobbies)) {
             this.hobbies.forEach(hobby => {
                 bio_prompt_txt += hobby + ",";
             });
