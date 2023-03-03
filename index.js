@@ -15,7 +15,7 @@ const DMS_CONFIG = require('./dms_config.json');
 // Initialize Digital Messaging framework
 var DMS = dms(DMS_CONFIG);
 //Enable request logging in DMS
-DMS.logRequests(true);
+//DMS.logRequests(false);
 
 const Customer = require("./customer.js");
 
@@ -24,7 +24,7 @@ const Customer = require("./customer.js");
  ****************************/
 const generator = require('./open_ai.js');
 
-let max_customers = 5;
+let max_customers = 20;
 var customers = {};
 
 for (let i = 0; i < 20 + 1; i++) {
