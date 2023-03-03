@@ -31,6 +31,12 @@ const generator = require('./open_ai.js');
 let max_customers = 1;
 var customers = {};
 
+for (let i = 0; i < 10; i++) {
+    DMS.sendMessage({ "type": "customer_end_session", "customer_id": i }, function () {
+
+    });
+}
+
 const initialilize_customers = async function () {
     for (i = 1; i < max_customers + 1; i++) {
         let base_personality = i % 2;
