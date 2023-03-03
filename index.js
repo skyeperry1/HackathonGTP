@@ -139,9 +139,8 @@ function handle_customer(message) {
                         customers[message.customer_id].last_msg_id++;
                         customers[message.customer_id].appendMessageToTranscript(response, "customer");
                         if (endchat) {
-                            DMS.sendMessage({ "type": "customer_end_session", "customer_id": message.customer_id, }, function () {
-                                customers[message.customer_id].state = "resolved";
-                            });
+                            customers[message.customer_id].state = "resolved";
+                            reset_customer(customers[message.customer_id]);
 
                         }
                     }
@@ -234,7 +233,7 @@ DMS.onMenuMessage = async (message) => {
 DMS.onCsrEndSession = async (customer_id) => {
     customers[customer_id].state = "resolved";
     try {
-        reset_customer(customers[customer_id]);
+        //reset_customer(customers[customer_id]);
     }
     catch (err) {
         //handle error
