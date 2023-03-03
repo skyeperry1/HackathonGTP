@@ -41,14 +41,19 @@ module.exports = class Bio {
         bio_prompt_txt += "Technological Skill(their ability to complete tasks related to tech, scale 1-10):" + this.technological_aptitude + "\n";
         bio_prompt_txt += "I.Q.: " + this.iq + "\n";
         bio_prompt_txt += "Occupation: " + this.occupation + "\n";
-        bio_prompt_txt += "Family:"
-        this.family.forEach(familyMemeber => {
-            bio_prompt_txt += "(" + familyMemeber.name + "," + familyMemeber.age, + "," + familyMemeber.relationship + ")";
-        });
-        bio_prompt_txt += "\nHobbies:";
-        this.hobbies.forEach(hobby => {
-            bio_prompt_txt += hobby + ",";
-        });
+        if (this.family) {
+            bio_prompt_txt += "Family:"
+            this.family.forEach(familyMemeber => {
+                bio_prompt_txt += "(" + familyMemeber.name + "," + familyMemeber.age, + "," + familyMemeber.relationship + ")";
+            });
+            bio_prompt_txt += "\n";
+        }
+        bio_prompt_txt += "Hobbies:";
+        if (this.hobbies) {
+            this.hobbies.forEach(hobby => {
+                bio_prompt_txt += hobby + ",";
+            });
+        }
         bio_prompt_txt += "\n";
         bio_prompt_txt += "Patience Level(scale of 1-10):" + this.patience_level + "\n";
         bio_prompt_txt += "Focus Level(scale of 1-10):" + this.focus_level + "\n";
