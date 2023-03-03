@@ -49,10 +49,10 @@ module.exports = class Bio {
             bio_prompt_txt += "\n";
         }
         bio_prompt_txt += "Hobbies:";
-        if (this.hobbies) {
-            this.hobbies.forEach(hobby => {
+        if (this.hobbies.length > 0) {
+            for (i = 0; i < this.hobbies.lenth; i++) {
                 bio_prompt_txt += hobby + ",";
-            });
+            }
         }
         bio_prompt_txt += "\n";
         bio_prompt_txt += "Patience Level(scale of 1-10):" + this.patience_level + "\n";
