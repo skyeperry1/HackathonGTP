@@ -168,6 +168,10 @@ function handle_customer(message) {
 
             if (message.text.includes("left the conversation.")) {
                 customers[message.customer_id].state = "resolved";
+                DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
+
+                    reset_customer(customers[customer_id]);
+                });
             }
         }
 
@@ -216,10 +220,10 @@ DMS.onMenuMessage = async (message) => {
 DMS.onCsrEndSession = async (customer_id) => {
     customers[customer_id].state = "resolved";
     try {
-        DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
+        // DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
 
-            reset_customer(customers[customer_id]);
-        });
+        //     reset_customer(customers[customer_id]);
+        // });
     }
     catch (err) {
         //handle error
