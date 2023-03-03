@@ -40,7 +40,11 @@ const initialilize_customers = async function () {
             console.log("random_customer", generated_customer);
             customers[generated_customer.id] = generated_customer;
             customers[generated_customer.id].state = "escalating";
-            sendMessageToDMS(generated_customer, "escalate");
+
+            DMS.sendMessage({ "type": "customer_end_session", "customer_id": generated_customer.id }, function () {
+                sendMessageToDMS(generated_customer, "escalate");
+            });
+
         });
 
     }
