@@ -123,7 +123,7 @@ function handle_customer(message) {
         }
 
 
-        if (customer.state === "connected") {
+        if (customer.state === "connected" && message.author != "bot") {
             customers[message.customer_id].appendMessageToTranscript(message.text, "agent");
             const CUSTOMER_response = generator.getCustomerResponse(customers[message.customer_id]);
             CUSTOMER_response.then((response) => {
