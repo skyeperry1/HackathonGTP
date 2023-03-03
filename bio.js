@@ -16,7 +16,6 @@ module.exports = class Bio {
         this.current_mood = bio.current_mood;
         this.personality_type = bio.personality_type;
         this.bio = bio.bio;
-        this.prompt_text = this.generateBioProptText();
     }
     address;
     name;
