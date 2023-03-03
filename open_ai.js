@@ -52,8 +52,8 @@ module.exports = {
                 temperature: 0.9,
                 maxTokens: 200,
                 topP: 1,
-                presencePenalty: 0.3,
-                frequencyPenalty: 0.2,
+                presencePenalty: 0.4,
+                frequencyPenalty: 0.6,
                 stop: ["CSR:"]
             });
             let open_ai_response = gptResponse.data.choices[0].text;
