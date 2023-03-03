@@ -170,10 +170,10 @@ function handle_customer(message) {
                 customers[message.customer_id].state = "connected";
             }
 
-            // if (message.text.includes("left the conversation.")) {
-            //     customers[message.customer_id].state = "resolved";
-            // }
-            //""
+            if (message.text.includes("has left the conversation. If you")) {
+                customers[message.customer_id].state = "resolved";
+            }
+
         }
 
     } catch (err) {
@@ -219,11 +219,10 @@ DMS.onMenuMessage = async (message) => {
 
 
 DMS.onCsrEndSession = async (customer_id) => {
-
+    customers[customer_id].state = "resolved";
     try {
         DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
-            //customers[customer_id].state = "resolved";
-            //reset_customer(customers[customer_id]);
+            reset_customer(customers[customer_id]);
         });
     }
     catch (err) {
