@@ -28,10 +28,10 @@ const Customer = require("./customer.js");
 
 const generator = require('./open_ai.js');
 
-let max_customers = 5;
+let max_customers = 20;
 var customers = {};
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < max_customers + 1; i++) {
     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i }, function () {
 
     });
@@ -64,6 +64,7 @@ initialilize_customers(function () {
 function reset_customer(customer, new_customer = false) {
     DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer.id, }, function () {
         customers[customer.id].state = "escalating";
+        customers[customer.id].transcript = "";
         sendMessageToDMS(customers[customer.id], "escalate");
     });
 
