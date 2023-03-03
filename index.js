@@ -36,7 +36,7 @@ for (let i = 0; i < max_customers + 1; i++) {
 const initialilize_customers = async function () {
     for (i = 1; i < max_customers + 1; i++) {
         let base_personality = i % 2;
-        let generated_customer = new Customer(i, "change mailing address", base_personality);
+        let generated_customer = new Customer(i, "updating their checking account mailing address", base_personality);
         console.log("generated_customer", generated_customer);
         await generated_customer.init(function () {
             console.log("random_customer", generated_customer);
