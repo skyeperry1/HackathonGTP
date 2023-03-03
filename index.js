@@ -116,6 +116,7 @@ function handle_customer(message) {
 
         if (message.type == "text" && message.text.includes("has left the conversation. If you")) {
             customers[message.customer_id].state = "resolved";
+            reset_customer(customer);
         }
 
 
