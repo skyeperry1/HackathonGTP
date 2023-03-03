@@ -33,7 +33,7 @@ module.exports = class Bio {
     personality_type;
     prompt_text;
 
-    static generateBioProptText() {
+    generateBioProptText() {
         var bio_prompt_txt;
         bio_prompt_txt += "Name: " + this.name + "\n";
         bio_prompt_txt += "Address: " + this.address + "\n";
