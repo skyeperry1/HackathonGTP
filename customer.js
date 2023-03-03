@@ -29,7 +29,7 @@ module.exports = class customer {
         const response = generator.generateCustomerBio(this.personality_traits);
         response.then((generated_bio) => {
             this.bio = new Bio(generated_bio);
-            this.bio = this.bio.generateBioProptText();
+            this.bio.generateBioProptText();
             // do something async and call the callback:
             callback.bind(this)();
         });
