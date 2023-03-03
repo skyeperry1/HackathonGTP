@@ -55,7 +55,7 @@ module.exports = class Bio {
         bio_prompt_txt += "Current Mood:" + this.current_mood + "\n";
         bio_prompt_txt += "Personality Type:" + this.personality_type + "\n";
         bio_prompt_txt += "Bio: " + this.bio + "\n";
-        prompt_text = bio_prompt_txt;
+        this.prompt_text = bio_prompt_txt;
     }
 }
 
