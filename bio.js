@@ -35,7 +35,7 @@ module.exports = class Bio {
     generateBioProptText() {
         var bio_prompt_txt = "";
         bio_prompt_txt += "Name: " + this.name + "\n";
-        bio_prompt_txt += "Address(Customer should speak in a tone and manor that aligns with the local dialect of this region): " + this.address + "\n";
+        bio_prompt_txt += "Address(Customer should speak in a tone and manor that aligns with the local dialect of this region. They will make sure to Correct the CSR if they use the wrong address.): " + this.address + "\n";
 
         bio_prompt_txt += "Dob" + this.dob;
         bio_prompt_txt += "Technological Skill(their ability to complete tasks related to tech, scale 1-10):" + this.technological_aptitude + "\n";
