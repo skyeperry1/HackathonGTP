@@ -28,7 +28,7 @@ const Customer = require("./customer.js");
 
 const generator = require('./open_ai.js');
 
-let max_customers = 5;
+let max_customers = 1;
 var customers = {};
 
 const initialilize_customers = async function () {
@@ -56,8 +56,11 @@ initialilize_customers(function () {
 });
 
 function reset_customer(customer, new_customer = false) {
-    customers[customer.id].state = "escalating";
-    sendMessageToDMS(customers[customer.id], "escalate");
+    DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer.id, }, function () {
+        customers[customer.id].state = "escalating";
+        sendMessageToDMS(customers[customer.id], "escalate");
+    });
+
 }
 
 /***************************************************************************
@@ -221,9 +224,7 @@ DMS.onMenuMessage = async (message) => {
 DMS.onCsrEndSession = async (customer_id) => {
     customers[customer_id].state = "resolved";
     try {
-        DMS.sendMessage({ "type": "customer_end_session", "customer_id": customer_id, }, function () {
-            reset_customer(customers[customer_id]);
-        });
+        reset_customer(customers[customer_id]);
     }
     catch (err) {
         //handle error
