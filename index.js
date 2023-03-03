@@ -28,7 +28,7 @@ const Customer = require("./customer.js");
 
 const generator = require('./open_ai.js');
 
-let max_customers = 1;
+let max_customers = 5;
 var customers = {};
 
 for (let i = 0; i < 10; i++) {
@@ -58,7 +58,7 @@ const initialilize_customers = async function () {
 
 
 initialilize_customers(function () {
-    console.log("customers:", customers);
+    console.log(customers);
 });
 
 function reset_customer(customer, new_customer = false) {
