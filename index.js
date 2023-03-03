@@ -22,10 +22,6 @@ const Customer = require("./customer.js");
 /*****************************
  * Open AI
  ****************************/
-// const OpenAI = require('openai-api');
-// const OPENAI_API_KEY = "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";
-// const openai = new OpenAI(OPENAI_API_KEY);
-
 const generator = require('./open_ai.js');
 
 let max_customers = 20;
