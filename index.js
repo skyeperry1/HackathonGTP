@@ -15,7 +15,7 @@ const DMS_CONFIG = require('./dms_config.json');
 // Initialize Digital Messaging framework
 var DMS = dms(DMS_CONFIG);
 //Enable request logging in DMS
-//DMS.logRequests(false);
+DMS.logRequests(true);
 
 const Customer = require("./customer.js");
 
