@@ -35,11 +35,11 @@ module.exports = class Bio {
     generateBioProptText() {
         var bio_prompt_txt = "";
         bio_prompt_txt += "Name: " + this.name + "\n";
-        bio_prompt_txt += "Address: " + this.address + "\n";
+        bio_prompt_txt += "Address(Customer should speak in a tone and manor that aligns with the local dialect of this region): " + this.address + "\n";
 
         bio_prompt_txt += "Dob" + this.dob;
         bio_prompt_txt += "Technological Skill(their ability to complete tasks related to tech, scale 1-10):" + this.technological_aptitude + "\n";
-        bio_prompt_txt += "I.Q.: " + this.iq + "\n";
+        bio_prompt_txt += "I.Q.(This effects Customers ability to unsderstand instructions, laungage and spelling): " + this.iq + "\n";
         bio_prompt_txt += "Occupation: " + this.occupation + "\n";
         if (Array.isArray(this.family)) {
             bio_prompt_txt += "Family:"
@@ -55,11 +55,11 @@ module.exports = class Bio {
             });
         }
         bio_prompt_txt += "\n";
-        bio_prompt_txt += "Patience Level(scale of 1-10):" + this.patience_level + "\n";
-        bio_prompt_txt += "Focus Level(scale of 1-10):" + this.focus_level + "\n";
-        bio_prompt_txt += "Current Mood:" + this.current_mood + "\n";
-        bio_prompt_txt += "Personality Type:" + this.personality_type + "\n";
-        bio_prompt_txt += "Bio: " + this.bio + "\n";
+        bio_prompt_txt += "Patience Level(This effects how likeley Customer is to become frustraded and ENDCHAT. Scale of 1-10):" + this.patience_level + "\n";
+        bio_prompt_txt += "Focus Level(Effects how likeley Customer is to stay on topic. Scale of 1-10):" + this.focus_level + "\n";
+        bio_prompt_txt += "Current Mood (Effects the tone of the conversation. If CSR is unhelpful, unprofessional or otherwise rude the Current Mood should be considered diminished):" + this.current_mood + "\n";
+        bio_prompt_txt += "Personality Type (This lightly effects how Customer responds ):" + this.personality_type + "\n";
+        bio_prompt_txt += "Bio (a Brief background of Customer): " + this.bio + "\n";
         this.prompt_text = bio_prompt_txt;
     }
 }
