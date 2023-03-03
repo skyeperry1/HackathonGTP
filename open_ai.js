@@ -50,7 +50,7 @@ module.exports = {
                 engine: "text-davinci-003",
                 prompt: new_prompt,
                 temperature: 0.9,
-                maxTokens: 500,
+                maxTokens: 200,
                 topP: 1,
                 presencePenalty: 0.3,
                 frequencyPenalty: 0.2,
