@@ -43,7 +43,7 @@ module.exports = class Bio {
         bio_prompt_txt += "Occupation: " + this.occupation + "\n";
         bio_prompt_txt += "Family:"
         this.family.forEach(familyMemeber => {
-            bio_prompt_txt += "(" + familyMemeber.name + "," + familyMemeber, age, + "," + familyMemeber.relationship + ")";
+            bio_prompt_txt += "(" + familyMemeber.name + "," + familyMemeber.age, + "," + familyMemeber.relationship + ")";
         });
         bio_prompt_txt += "\nHobbies:";
         this.hobbies.forEach(hobby => {
