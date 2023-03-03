@@ -201,24 +201,9 @@ app.get('/reset', (req, res) => {
         });
     }
 
-    initialilize_customers = async function () {
-        for (i = 1; i < max_customers + 1; i++) {
-            let base_personality = i % 2;
-            let generated_customer = new Customer(i, "updating their checking account mailing address", base_personality);
-            console.log("generated_customer", generated_customer);
-            await generated_customer.init(function () {
-                console.log("random_customer", generated_customer);
-                customers[generated_customer.id] = generated_customer;
-                customers[generated_customer.id].state = "escalating";
-
-                DMS.sendMessage({ "type": "customer_end_session", "customer_id": generated_customer.id }, function () {
-                    sendMessageToDMS(generated_customer, "escalate");
-                });
-
-            });
-
-        }
-    }
+    initialilize_customers(function () {
+        console.log(customers);
+    });
     res.status(200).send("success!");
 });
 
