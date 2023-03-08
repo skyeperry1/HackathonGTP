@@ -28,7 +28,7 @@ let max_customers = 1;
 const start_id = 20;
 var customers = {};
 
-for (let i = 0; i < 20 + 1; i++) {
+for (let i = start_id; i < start_id + 1; i++) {
     DMS.sendMessage({ "type": "customer_end_session", "customer_id": i }, function () {
 
     });
