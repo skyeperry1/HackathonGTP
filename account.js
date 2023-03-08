@@ -36,7 +36,7 @@ module.exports = class Account {
         } else if (rnd == 1) {
             return "Savings";
         } else {
-            return "credit";
+            return "Credit card";
         }
     }
 
