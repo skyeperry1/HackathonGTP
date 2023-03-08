@@ -61,13 +61,16 @@ const createContactRecord = async function (customer, callback) {
             "Gender": customer.bio.gender.charAt(0),
             "Phone": customer.bio.phone_number,
             "SS_Number": customer.bio.social_security_number,
+            "ContactAccounts": []
             // "ContactAccounts": [
             //     {"AccountNumber": "2222", "AccountType": "Checking","AccountOpenDate":"20180409","LastPaymentAmount": 20.50,"AverageMonthlyBalance": 82.25, "AccountBalance": 999.87},
             //     {"AccountNumber": "3333", "AccountType": "Savings","AccountOpenDate":"20180409","LastPaymentAmount": 18.50,"AverageMonthlyBalance": 972.45,"AccountBalance": 79.00}
             //     ]
         }
+        // for (let i = 0; i < customer.accounts.length; i++){
 
-        customer.accounts.array.forEach(account => {
+        // }
+        customer.accounts.forEach(account => {
             request.ContactAccounts.push(account);
         });
         //Make outbound call to DMS/Pega
@@ -84,7 +87,7 @@ const createContactRecord = async function (customer, callback) {
 const initialilize_customers = async function () {
     for (i = start_id; i < max_customers + start_id; i++) {
         let base_personality = i % 2;
-        let generated_customer = new Customer(i, "updating their checking account mailing address", base_personality);
+        let generated_customer = new Customer(i, "updating their account mailing address", base_personality);
         console.log("generated_customer", generated_customer);
         await generated_customer.init(function () {
             console.log("random_customer", generated_customer);
@@ -143,7 +146,7 @@ function sendMessageToDMS(customer, message) {
         customer.id, //
         customer.last_msg_id, //Unique id of the message
         message,
-        customer.bio.name,
+        customer.bio.first_name + " " + customer.bio.last_name,
         function (response) {
             //customers[id].state = "escalate";
             customers[customer.id].last_msg_id++;

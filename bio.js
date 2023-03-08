@@ -51,10 +51,15 @@ module.exports = class Bio {
 
     generateBioProptText() {
         var bio_prompt_txt = "";
-        bio_prompt_txt += "Name: " + this.name + "\n";
-        bio_prompt_txt += "Address(Customer should speak in a tone and manor that aligns with the local dialect of this region. They will make sure to Correct the CSR if they use the wrong address.): " + this.address + "\n";
-
-        bio_prompt_txt += "Dob:" + this.dob;
+        bio_prompt_txt += "Name: " + this.first_name + " " + this.last_name + "\n";
+        bio_prompt_txt += "Current address(Customer should speak in a tone and manor that aligns with the local dialect of this region. They will make sure to Correct the CSR if they use the wrong address.): " + this.address + "\n";
+        bio_prompt_txt += "Previous address(the previous address of the customer): " + this.previous_address + "\n";
+        bio_prompt_txt += "Email:" + this.email_address + "\n";
+        bio_prompt_txt += "Current Phone Number:" + this.phone_number + "\n";
+        bio_prompt_txt += "Previous Phone Number:" + this.previous_phone_number + "\n";
+        bio_prompt_txt += "Social:" + this.social_security_number + "\n";
+        bio_prompt_txt += "Gender:" + this.gender + "\n";
+        bio_prompt_txt += "Dob:" + this.dob + "\n";
         bio_prompt_txt += "Technological Skill(their ability to complete tasks related to tech, scale 1-10):" + this.technological_aptitude + "\n";
         bio_prompt_txt += "I.Q.(This effects Customers ability to unsderstand instructions, laungage and spelling): " + this.iq + "\n";
         bio_prompt_txt += "Occupation: " + this.occupation + "\n";

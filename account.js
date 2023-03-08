@@ -46,5 +46,14 @@ module.exports = class Account {
         return new Date(timestamp).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" });
     }
 
+    generatePromptText() {
+        var prompt_txt = "";
+        prompt_txt += "Account Number:" + this.number + "\n";
+        prompt_txt += "Account Type:" + this.type + "\n";
+        prompt_txt += "Account Open Date:" + this.open_date + "\n";
+        prompt_txt += "Account Balance:$" + this.balance + "\n";
+        prompt_txt += "Last Payment:$" + last_payment_amount + "\n";
+        return prompt_txt;
+    }
 }
 
