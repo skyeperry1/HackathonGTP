@@ -33,22 +33,65 @@ for (let i = 0; i < 20 + 1; i++) {
     });
 }
 
+const axios = require('axios'); //For making requests
+const PEGA_API_URL = "https://lab0244.lab.pega.com/prweb/api/CreateContactRecord/v1/create";
+const createContactRecord = async function (customer) {
+    // let first_name = customer.bio.name.substring(0, customer.bio.name.indexOf(' '));
+    // let last_name = customer.bio.name.substring(customer.bio.name.indexOf(' ')+ 1);
+    try {
+        let options = {
+            auth: {
+                username: 'perrs',
+                password: 'rules'
+            }
+        }
+
+        let request = {
+            "ID": customer.id,
+            "FirstName": customer.bio.first_name,
+            "LastName": customer.bio.last_name,
+            "Address1": customer.bio.address.street,
+            "City": customer.bio.address.city,
+            "State": customer.bio.address.state,
+            "Zip": customer.bio.address.zip,
+            "Email": customer.bio.email_address,
+            "DateOfBirth": customer.bio.dob,
+            "Salutation": customer.bio.salutation,
+            "Gender": customer.bio.gender.charAt(0),
+            "Phone": customer.bio.phone_number,
+            "SS_Number": customer.bio.social_security_number,
+            // "ContactAccounts": [
+            //     {"AccountNumber": "2222", "AccountType": "Checking","AccountOpenDate":"20180409","LastPaymentAmount": 20.50,"AverageMonthlyBalance": 82.25, "AccountBalance": 999.87},
+            //     {"AccountNumber": "3333", "AccountType": "Savings","AccountOpenDate":"20180409","LastPaymentAmount": 18.50,"AverageMonthlyBalance": 972.45,"AccountBalance": 79.00}
+            //     ]
+        }
+
+
+
+        //Make outbound call to DMS/Pega
+        let response = await axios.post(PEGA_API_URL, request, options);
+        console.log(response);
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 const initialilize_customers = async function () {
-    for (i = 1; i < max_customers + 1; i++) {
+    for (i = 20; i < max_customers + 21; i++) {
         let base_personality = i % 2;
         let generated_customer = new Customer(i, "updating their checking account mailing address", base_personality);
         console.log("generated_customer", generated_customer);
         await generated_customer.init(function () {
             console.log("random_customer", generated_customer);
-            customers[generated_customer.id] = generated_customer;
-            customers[generated_customer.id].state = "escalating";
+            createContactRecord(generated_customer, function () {
+                customers[generated_customer.id] = generated_customer;
+                customers[generated_customer.id].state = "escalating";
+                DMS.sendMessage({ "type": "customer_end_session", "customer_id": generated_customer.id }, function () {
+                    sendMessageToDMS(generated_customer, "escalate");
+                });
 
-            DMS.sendMessage({ "type": "customer_end_session", "customer_id": generated_customer.id }, function () {
-                sendMessageToDMS(generated_customer, "escalate");
             });
-
         });
-
     }
 }
 
@@ -166,7 +209,7 @@ function handle_customer(message) {
             if (message.text.includes("Thank you. What billing question can we help you with")) {
                 DMS.sendTextMessage(
                     customer.id, //
-                    customer.last_msg_id, //Unique id of the message
+                    customer.last_msg_id, //Unique id of the message 
                     "I need to change my address",
                     customer.bio.name,
                     function (response) {

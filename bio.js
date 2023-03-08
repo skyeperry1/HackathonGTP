@@ -1,10 +1,16 @@
 // bio.js
 'use strict';
+const Address = require("./address.js");
 
 module.exports = class Bio {
     constructor(bio) {
-        this.address = bio.address;
-        this.name = bio.name;
+        this.address = new Address(bio.address.street, bio.address.city, bio.address.state, bio.address.zip);
+        this.previous_address = new Address(bio.previous_address.street, bio.previous_address.city, bio.previous_address.state, bio.previous_address.zip);
+        this.first_name = bio.first_name;
+        this.last_name = bio.last_name;
+        this.phone_number = bio.current_phone_number;
+        this.previous_phone_number = bio.previous_phone_number;
+        this.social_security_number = bio.nsocial_security_number;
         this.dob = bio.dob;
         this.technological_aptitude = bio.technological_aptitude;
         this.iq = bio.iq;
@@ -16,9 +22,20 @@ module.exports = class Bio {
         this.current_mood = bio.current_mood;
         this.personality_type = bio.personality_type;
         this.bio = bio.bio;
+        this.gender = bio.gender;
+        this.salutation = bio.salutation;
+        this.email_address = bio.email_address;
     }
     address;
-    name;
+    first_name;
+    last_name;
+    gender;
+    email_address;
+    salutation;
+    previous_address;
+    social_security_number;
+    phone_number;
+    previous_phone_number;
     dob;
     technological_aptitude;
     iq;
@@ -37,7 +54,7 @@ module.exports = class Bio {
         bio_prompt_txt += "Name: " + this.name + "\n";
         bio_prompt_txt += "Address(Customer should speak in a tone and manor that aligns with the local dialect of this region. They will make sure to Correct the CSR if they use the wrong address.): " + this.address + "\n";
 
-        bio_prompt_txt += "Dob" + this.dob;
+        bio_prompt_txt += "Dob:" + this.dob;
         bio_prompt_txt += "Technological Skill(their ability to complete tasks related to tech, scale 1-10):" + this.technological_aptitude + "\n";
         bio_prompt_txt += "I.Q.(This effects Customers ability to unsderstand instructions, laungage and spelling): " + this.iq + "\n";
         bio_prompt_txt += "Occupation: " + this.occupation + "\n";
