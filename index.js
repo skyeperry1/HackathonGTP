@@ -25,7 +25,7 @@ const Customer = require("./customer.js");
 const generator = require('./open_ai.js');
 
 let max_customers = 1;
-const start_id = 20;
+const start_id = 200;
 var customers = {};
 
 for (let i = start_id; i < start_id + 1; i++) {
@@ -71,7 +71,8 @@ const createContactRecord = async function (customer, callback) {
 
         // }
         customer.accounts.forEach(account => {
-            request.ContactAccounts.push(account);
+            let account_request_obj = { "AccountNumber": account.number, "AccountType": account.type, "AccountOpenDate": account.open_date, "LastPaymentAmount": account.last_payment_amount, "AverageMonthlyBalance": account.avg_monthly_balance, "AccountBalance": account.current_balance }
+            request.ContactAccounts.push(account_request_obj);
         });
         //Make outbound call to DMS/Pega
         let response = await axios.post(PEGA_API_URL, request, options);
