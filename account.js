@@ -52,7 +52,7 @@ module.exports = class Account {
         prompt_txt += "Account Type:" + this.type + "\n";
         prompt_txt += "Account Open Date:" + this.open_date + "\n";
         prompt_txt += "Account Balance:$" + this.balance + "\n";
-        prompt_txt += "Last Payment:$" + last_payment_amount + "\n";
+        prompt_txt += "Last Payment:$" + this.last_payment_amount + "\n";
         return prompt_txt;
     }
 }
