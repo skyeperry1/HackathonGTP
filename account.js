@@ -25,7 +25,7 @@ module.exports = class Account {
     }
 
     getRandomDollarAmount(min, max) {
-        let int = getRandomInt(min * 100, max * 100);
+        let int = this.getRandomInt(min * 100, max * 100);
         return int / 100;
     }
 
