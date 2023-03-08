@@ -24,7 +24,8 @@ const Customer = require("./customer.js");
  ****************************/
 const generator = require('./open_ai.js');
 
-let max_customers = 20;
+let max_customers = 1;
+const start_id = 20;
 var customers = {};
 
 for (let i = 0; i < 20 + 1; i++) {
@@ -70,14 +71,14 @@ const createContactRecord = async function (customer) {
 
         //Make outbound call to DMS/Pega
         let response = await axios.post(PEGA_API_URL, request, options);
-        console.log(response);
+        console.log(response.status);
     } catch (err) {
         console.log(err)
     }
 }
 
 const initialilize_customers = async function () {
-    for (i = 20; i < max_customers + 21; i++) {
+    for (i = start_id; i < max_customers + start_id; i++) {
         let base_personality = i % 2;
         let generated_customer = new Customer(i, "updating their checking account mailing address", base_personality);
         console.log("generated_customer", generated_customer);

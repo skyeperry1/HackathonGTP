@@ -29,7 +29,7 @@ module.exports = {
             try {
                 open_ai_json_response = JSON.parse(open_ai_response);
             } catch {
-                generateCustomerBio();
+                this.generateCustomerBio();
             }
 
             //console.log("callOpenAI response", open_ai_json_response);
