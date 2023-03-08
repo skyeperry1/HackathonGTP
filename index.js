@@ -67,8 +67,9 @@ const createContactRecord = async function (customer, callback) {
             //     ]
         }
 
-
-
+        customer.accounts.array.forEach(account => {
+            request.ContactAccounts.push(account);
+        });
         //Make outbound call to DMS/Pega
         let response = await axios.post(PEGA_API_URL, request, options);
         console.log(response.status);
@@ -77,6 +78,8 @@ const createContactRecord = async function (customer, callback) {
         console.log(err)
     }
 }
+
+
 
 const initialilize_customers = async function () {
     for (i = start_id; i < max_customers + start_id; i++) {

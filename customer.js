@@ -1,5 +1,6 @@
 //customer.js
 const Bio = require("./bio.js");
+const Account = require("./account.js");
 const generator = require('./open_ai.js');
 const PersonalityTraits = require('./personality_traits.js');
 
@@ -15,6 +16,8 @@ module.exports = class customer {
         this.transcript = ""
         this.tasks = tasks;
         this.personality_traits = PersonalityTraits.getRandom(personality_category);
+        this.accounts[0] = new Account();
+        this.accounts[1] = new Account();
     }
     id;
     last_msg_id;
@@ -23,6 +26,7 @@ module.exports = class customer {
     tasks;
     personality_traits;
     bio;
+    accounts;
 
 
     init(callback) {
