@@ -36,7 +36,7 @@ for (let i = 0; i < 20 + 1; i++) {
 
 const axios = require('axios'); //For making requests
 const PEGA_API_URL = "https://lab0244.lab.pega.com/prweb/api/CreateContactRecord/v1/create";
-const createContactRecord = async function (customer) {
+const createContactRecord = async function (customer, callback) {
     // let first_name = customer.bio.name.substring(0, customer.bio.name.indexOf(' '));
     // let last_name = customer.bio.name.substring(customer.bio.name.indexOf(' ')+ 1);
     try {
@@ -72,6 +72,7 @@ const createContactRecord = async function (customer) {
         //Make outbound call to DMS/Pega
         let response = await axios.post(PEGA_API_URL, request, options);
         console.log(response.status);
+        callback();
     } catch (err) {
         console.log(err)
     }
