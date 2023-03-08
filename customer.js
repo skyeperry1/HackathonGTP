@@ -17,8 +17,8 @@ module.exports = class customer {
         this.tasks = tasks;
         this.personality_traits = PersonalityTraits.getRandom(personality_category);
         this.accounts = [];
-        this.accounts.push(new Account());
-        this.accounts.push(new Account());
+        this.accounts[0] = new Account();
+        this.accounts[1] = new Account();
     }
     id;
     last_msg_id;
